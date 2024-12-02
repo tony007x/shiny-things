@@ -6,7 +6,7 @@
 
 <div class="w-full h-[64px] bg-[#40A2E3] sticky top-0 items-center">
     <div
-        class="flex w-full items-center h-full justify-between px-14 shadow-md"
+        class="flex w-full items-center h-full justify-between px-10 shadow-md"
     >
         <img src="/logo-white.png" alt="logo" class="w-8" />
         <div class="flex items-center gap-8 text-white">

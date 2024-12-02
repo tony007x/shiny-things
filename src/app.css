@@ -76,3 +76,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+html, body {
+  overscroll-behavior: none; /* ปิด overscroll */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* ป้องกันการเลื่อนด้านข้าง */
+  scroll-behavior: smooth; /* ทำให้การเลื่อนลื่นไหล */
+}

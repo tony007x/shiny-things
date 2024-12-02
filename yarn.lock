@@ -2148,6 +2148,11 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
+wretch@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/wretch/-/wretch-2.11.0.tgz#cf48a1c3eb0a29c4eb9aa241cd06da95b06fedab"
+  integrity sha512-zbFW4PnPSS5RFQabHRkCAcMQjmFGrEQLcJwYe4YGXL9KWXneu03Dtaz2JUeqEkOwNDMjdfHEHPL+AIZJwE+y1g==
+
 yaml@^2.3.4:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.6.1.tgz#42f2b1ba89203f374609572d5349fb8686500773"

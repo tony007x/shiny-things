@@ -11,6 +11,6 @@
     </div>
     <!-- right picture box -->
     <div class="flex flex-col w-1/4h-fit border  gap-3 p-3 rounded-3xl shadow-md bg-[#D9D9D9]">
-        
+    
     </div>
 </div>

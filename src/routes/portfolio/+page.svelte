@@ -4,7 +4,10 @@
 
 </script>
 
-<div class="flex flex-col w-full h-screen bg-[#FFF6E9]">
+<div class="flex flex-col w-full bg-[#FFF6E9]">
+    <PortfolioBox/>
+    <PortfolioBox/>
+    <PortfolioBox/>
     <PortfolioBox/>
     <PortfolioBox/>
     <PortfolioBox/>

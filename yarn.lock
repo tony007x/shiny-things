@@ -1884,6 +1884,11 @@ svelte-check@^4.0.0:
     picocolors "^1.0.0"
     sade "^1.7.4"
 
+svelte-radix@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/svelte-radix/-/svelte-radix-2.0.1.tgz#ff5f545cc8539529c083fe780f6ca884374434d3"
+  integrity sha512-YrX44Dj+Rp6YZuPSjdmyd6P8QTkb2NXwySUCZYzjwkP6Cl3dZaTBPPeaSOutP3v3ycQ2XwyNOpyn4p0QcN+uYQ==
+
 svelte-sonner@^0.3.28:
   version "0.3.28"
   resolved "https://registry.yarnpkg.com/svelte-sonner/-/svelte-sonner-0.3.28.tgz#b24b3e7af924d5c50ca2e33cede1382283074abf"

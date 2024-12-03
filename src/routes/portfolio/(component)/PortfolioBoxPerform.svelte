@@ -1,4 +1,4 @@
-<div class="flex flex-row gap-3 p-3 h-full">
+<div class="flex flex-row gap-3 p-5 h-full">
     <!-- left text box -->
     <div class="flex flex-col w-3/4 min-h-[250px] border  gap-3 p-3 rounded-3xl shadow-md bg-[#D9D9D9]">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo numquam, 

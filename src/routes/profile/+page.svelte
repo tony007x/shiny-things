@@ -7,7 +7,7 @@
     //@ts-ignore
     import { Send, Pen } from "lucide-svelte";
 </script>
-<div class="flex w-full h-screen overflow-y-auto bg-[#FFF6E9]">
+<div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[#FFF6E9]">
     <!-- left box -->
     <div class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full border gap-5 p-3 border-[red]">
         <!-- <div class="fixed gap-5 p-3 flex flex-col h-full border-r border-[green]"> -->

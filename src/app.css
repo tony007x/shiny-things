@@ -86,3 +86,32 @@ html, body {
   overflow-x: hidden; /* ป้องกันการเลื่อนด้านข้าง */
   scroll-behavior: smooth; /* ทำให้การเลื่อนลื่นไหล */
 }
+
+
+::-webkit-scrollbar {
+  width: 8px; /* ความกว้างของ Scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.5); /* สี Thumb กึ่งโปร่งใส */
+  border-radius: 4px; /* มุมโค้งมน */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.8); /* สี Thumb เมื่อ Hover */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* พื้นหลังของ Scrollbar */
+}
+
+/* Scrollbar สำหรับ Firefox */
+* {
+  scrollbar-width: thin; /* ความกว้างบาง */
+  scrollbar-color: rgba(100, 100, 100, 0.5) transparent; /* สีของ Thumb และ Track */
+}
+
+/* ตัวเลือกเพิ่มเติมสำหรับ IE/Edge */
+.scrollable {
+  -ms-overflow-style: none; /* ซ่อน Scrollbar สำหรับ IE */
+}

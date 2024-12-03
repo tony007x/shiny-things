@@ -7,10 +7,10 @@
     //@ts-ignore
     import { Send, Pen } from "lucide-svelte";
 </script>
-<Navbar/>
-<div class="flex w-full h-[200vh] overflow-y-auto bg-[#FFF6E9]">
+<div class="flex w-full h-screen overflow-y-auto bg-[#FFF6E9]">
     <!-- left box -->
-    <div class="flex flex-col w-1/3 border-r  p-3 bg-[#BBE2EC] gap-5 h-full">
+    <div class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full border gap-5 p-3 border-[red]">
+        <!-- <div class="fixed gap-5 p-3 flex flex-col h-full border-r border-[green]"> -->
         <!--edit profile-->
         <div class="text-[#656565] text-right">edit</div>
         <!--profile-->
@@ -49,10 +49,18 @@
             <Button class = "text-[22px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-slate-300 rounded-2xl shadow-md"><Pen size={20}/>Edit Profile
             </Button>
         </div>
+        <!-- </div> -->
     </div>
 
     <!-- middle box -->
     <div class="flex flex-col w-full p-5 gap-4 overflow-scroll">
+        <Postelement/>
+        <Postelement/>
+        <Postelement/>
+        <Postelement/>
+        <Postelement/>
+        <Postelement/>
+        <Postelement/>
         <Postelement/>
     </div>
 

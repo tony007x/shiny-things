@@ -10,7 +10,7 @@
             nihil aspernatur?</p>
     </div>
     <!-- right picture box -->
-    <div class="flex flex-col w-1/4h-fit border  gap-3 p-3 rounded-3xl shadow-md bg-[#D9D9D9]">
-    
+    <div class="flex flex-col w-1/4 h-fit border  gap-3 p-3 rounded-3xl shadow-md bg-[#D9D9D9]">
+        <img src="https://via.placeholder.com/150" alt="placeholder" class="rounded-3xl">
     </div>
 </div>

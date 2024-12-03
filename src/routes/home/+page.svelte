@@ -1,15 +1,30 @@
 <script lang="ts">
+    import { Input } from "$lib/components/ui/input/index.js";
+    import Post from "./(component)/createpost.svelte";
+    import { Badge } from "$lib/components/ui/badge/index.js";
+
 </script>
 
 
-<div class="flex w-full h-screen">
-    <!-- left bar -->
-    <div class="flex w-1/4 border border-[red]">
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-            Harum ea libero voluptatibus molestias expedita accusantium provident cumque vel hic. 
-            Magni vel iusto facere quae, iure laboriosam numquam odit officiis ad!</p>
+<div class="flex w-full h-[200vh] overflow-y-auto bg-[#FFF6E9]">
+    <!-- left box -->
+    <div class="flex flex-col w-1/3 border-r  p-3">
+        <Input placeholder="Search. . ."/>
+        <div class="grid grid-cols-2 gap-2 w-full p-4 justify-items-center">
+            <Badge class="flex justify-center items-center w-fit  bg-gray-500 text-white rounded-lg px-4">Tags</Badge>
+            <Badge class="flex justify-center items-center w-fit  bg-gray-500 text-white rounded-lg px-4">Tags</Badge>
+            <Badge class="flex justify-center items-center w-fit  bg-gray-500 text-white rounded-lg px-4">Tags</Badge>
+            <Badge class="flex justify-center items-center w-fit  bg-gray-500 text-white rounded-lg px-4">Tags</Badge>
+          </div>          
     </div>
-    <div class="flex w-full border border-[blue]">
 
+    <!-- middle box -->
+    <div class="flex w-3/4 ">
+
+    </div>
+
+    <!-- right box -->
+    <div class="flex w-1/2 border-l">
+        <Post/>
     </div>
 </div>

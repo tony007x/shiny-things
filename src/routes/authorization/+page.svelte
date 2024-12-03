@@ -24,7 +24,7 @@
 </script>
 
 <div
-    class={`flex w-full h-screen bg-[#FFF6E9] ${isRegister ? "flex-row-reverse" : ""}`}
+    class={`flex w-full h-screen bg-[#FFF6E9] transform transition-transform duration-500 ${isRegister ? "flex-row-reverse" : ""}`}
 >
     <!-- Left section with the login form -->
     <div class="flex w-2/3 justify-center items-center">

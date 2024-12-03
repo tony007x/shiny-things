@@ -4,7 +4,7 @@
     import * as Avatar from "$lib/components/ui/avatar/index.js";
 </script>
 
-<div class="w-full h-[64px] bg-[#40A2E3] sticky top-0 items-center">
+<div class="w-full h-[64px] bg-[#40A2E3] sticky top-0 items-center z-50">
     <div
         class="flex w-full items-center h-full justify-between px-10 shadow-md"
     >

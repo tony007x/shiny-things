@@ -10,5 +10,6 @@
     <PortfolioBoxPerform/>
     <PortfolioBoxPerform/>
     <PortfolioBoxPerform/>
+    <PortfolioBoxSkill/>
 
 </div>

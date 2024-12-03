@@ -2,15 +2,15 @@
     import Navbar from "../(components)/navbar.svelte";
     import * as Avatar from "$lib/components/ui/avatar/index.js";
     import { Button } from "$lib/components/ui/button/index.js";
-
-    //@ts-ignore
-    import { Send } from "lucide-svelte";
     import Postelement from "../home/(component)/postelement.svelte";
+    
+    //@ts-ignore
+    import { Send, Pen } from "lucide-svelte";
 </script>
 <Navbar/>
 <div class="flex w-full h-[200vh] overflow-y-auto bg-[#FFF6E9]">
     <!-- left box -->
-    <div class="flex flex-col w-1/3 border-r  p-3 bg-[#BBE2EC] gap-4 h-full">
+    <div class="flex flex-col w-1/3 border-r  p-3 bg-[#BBE2EC] gap-5 h-full">
         <!--edit profile-->
         <div class="text-[#656565] text-right">edit</div>
         <!--profile-->
@@ -38,15 +38,17 @@
             <div class="text-[black] text-[20px]">Education</div>
         </div>
         <div class="flex flex-col justify-start gap-2">
-            <!--Google-->
-            <img src="/google.png" alt="facebook" class="h-[51px] w-[51px]">
+            <!--Facebook-->
+            <img src="/facebook.png" alt="facebook" class="h-[51px] w-[51px]">
             <!--Github-->
-            <img src="/google.png" alt="github" class="h-[51px] w-[51px]">
+            <img src="/github.png" alt="github" class="h-[51px] w-[51px]">
             <!--X-->
-            <img src="/google.png" alt="x" class="h-[51px] w-[51px]">
+            <img src="/x.png" alt="x" class="h-[51px] w-[51px]">
         </div>
-        <button class = "text-[22px] text-center text-[white] w-full h-[72px] border gap-3 p-3 bg-[#40A2E3] hover:bg-slate-300 rounded-2xl shadow-md">Edit Profile
-        </button>
+        <div class="flex justify-center">
+            <Button class = "text-[22px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-slate-300 rounded-2xl shadow-md"><Pen size={20}/>Edit Profile
+            </Button>
+        </div>
     </div>
 
     <!-- middle box -->

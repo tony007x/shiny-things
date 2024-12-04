@@ -10,16 +10,18 @@
     >
         <img src="/logo-white.png" alt="logo" class="w-8" />
         <div class="flex items-center gap-8 text-white">
-            <h1><a href="#Home">Home</a></h1>
-            <h1><a href="#Jobs">Jobs</a></h1>
-            <h1><a href="#Chat">Chat</a></h1>
+            <h1><a href="/home">Home</a></h1>
+            <h1><a href="/jobs">Jobs</a></h1>
+            <h1><a href="/chat">Chat</a></h1>
             <h1><a href="#logout"><LogOut /></a></h1>
             <Avatar.Root>
-                <Avatar.Image
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                />
-                <Avatar.Fallback>CN</Avatar.Fallback>
+                <a href="/profile">
+                    <Avatar.Image
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                    />
+                    <Avatar.Fallback>CN</Avatar.Fallback>
+                </a>
             </Avatar.Root>
         </div>
     </div>

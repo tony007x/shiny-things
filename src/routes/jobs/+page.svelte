@@ -17,7 +17,7 @@
     let isRecPending: boolean = false;
 
     // Reset all states except the active group
-    function resetGroup(group: "job" | "recruiter") {
+    const resetGroup = (group: "job" | "recruiter")=> {
         if (group === "job") {
             isRecruiter = false;
             isApplicant = false;

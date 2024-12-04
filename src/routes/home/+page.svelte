@@ -7,7 +7,7 @@
 </script>
 
 
-<div class="flex w-full h-screen bg-[#FFF6E9]">
+<div class="flex w-full h-[calc(100vh-64px)] bg-[#FFF6E9]">
     <!-- left box -->
     <div class="flex flex-col w-1/3 border-r-2  p-3">
         <Input placeholder="Search. . ."/>
@@ -21,12 +21,6 @@
 
     <!-- middle box -->
     <div class="flex flex-col w-full p-5 gap-4 overflow-scroll">
-        <Postelement/>
-        <Postelement/>
-        <Postelement/>
-        <Postelement/>
-        <Postelement/>
-        <Postelement/>
         <Postelement/>
     </div>
 

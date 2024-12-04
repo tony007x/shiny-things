@@ -12,12 +12,14 @@
     <div class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full gap-5 p-3">
         <!-- <div class="fixed gap-5 p-3 flex flex-col h-full border-r border-[green]"> -->
         <!--edit profile-->
-        <div class="text-[#656565] text-right">edit</div>
+        <div class="text-[#656565] text-right ">
+            edit
+        </div>
         <!--profile-->
         <div class="flex flex-col justify-center gap-2">
             <!--pic-->
             <div class="flex justify-center">
-                <Avatar.Root class="w-[267px] h-[267px]">
+                <Avatar.Root class="w-[250px] h-[250px]">
                         <Avatar.Image
                             src="https://github.com/shadcn.png"
                             alt="@shadcn"
@@ -30,7 +32,7 @@
         </div>
         <!--send message-->
         <div class = "flex justify-center">
-            <Button class="text-[#000000] text-[22px] rounded-2xl gap-2 hover:bg-slate-300 w-fit h-fit bg-[#D9D9D9] shadow-md"><Send size={20}/>Send Message</Button>
+            <Button class="text-[#000000] text-[16px] rounded-2xl gap-2 hover:bg-slate-300 w-fit h-fit bg-[#D9D9D9] shadow-md"><Send size={20}/>Send Message</Button>
         </div>
         <!--Other..-->
         <div class="flex flex-col justify-start gap-2">
@@ -39,14 +41,14 @@
         </div>
         <div class="flex flex-col justify-start gap-2">
             <!--Facebook-->
-            <img src="/facebook.png" alt="facebook" class="h-[51px] w-[51px]">
+            <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]">
             <!--Github-->
-            <img src="/github.png" alt="github" class="h-[51px] w-[51px]">
+            <img src="/github.png" alt="github" class="h-[40px] w-[40px]">
             <!--X-->
-            <img src="/x.png" alt="x" class="h-[51px] w-[51px]">
+            <img src="/x.png" alt="x" class="h-[40px] w-[40px]">
         </div>
         <div class="flex justify-center">
-            <Button class = "text-[22px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-slate-300 rounded-2xl shadow-md"><Pen size={20}/>Edit Profile
+            <Button class = "text-[18px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-slate-300 rounded-2xl shadow-md"><Pen size={20}/>Edit Profile
             </Button>
         </div>
         <!-- </div> -->

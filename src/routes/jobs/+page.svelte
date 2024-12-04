@@ -6,53 +6,156 @@
     //@ts-ignore
     import { ChevronDown } from "lucide-svelte";
 
+    // Job Group States
     let isJobs: boolean = false;
     let isOffer: boolean = false;
-    let isJobpend: boolean = false;
+    let isJobPending: boolean = false;
+
+    // Recruiter Group States
+    let isRecruiter: boolean = false;
+    let isApplicant: boolean = false;
+    let isRecPending: boolean = false;
+
+    // Reset all states except the active group
+    function resetGroup(group: "job" | "recruiter") {
+        if (group === "job") {
+            isRecruiter = false;
+            isApplicant = false;
+            isRecPending = false;
+        } else if (group === "recruiter") {
+            isJobs = false;
+            isOffer = false;
+            isJobPending = false;
+        }
+    }
 </script>
 
 <Navbar />
 
-<div class="flex w-full h-[200vh] overflow-y-auto bg-[#FFF6E9]">
-    <!-- left box -->
+<div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[#FFF6E9]">
+    <!-- Left Box -->
     <div class="flex flex-col w-1/4 border-r-2 bg-[#BBE2EC]">
+        <!-- Job Seeker Group -->
         <div
             class="flex w-full border-b h-20 justify-between items-center px-4"
         >
             <h1>JOB SEEKER</h1>
-            <button class="border" on:click={() => (isJobs = !isJobs)}>
-                <ChevronDown class="hover:cursor-pointer hover:text-gray-600" />
+            <button
+                on:click={() => {
+                    isJobs = !isJobs;
+                    resetGroup("job");
+                }}
+            >
+                <ChevronDown
+                    class={`transition-transform ${
+                        isJobs ? "rotate-180" : ""
+                    } hover:cursor-pointer hover:text-gray-600`}
+                />
             </button>
         </div>
         {#if isJobs}
             <div
-                class="flex flex-col w-full border-b items-start px-10 py-4 gap-4 bg-[#33415549]"
+                class={`flex flex-col w-full items-start px-10 py-4 gap-4 bg-[#33415549] transition-all duration-500 ${
+                    isJobs ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                } overflow-hidden`}
             >
                 <button
-                    class={`cursor-pointer ${isOffer ? "underline" : ""}`}
+                    class={`cursor-pointer ${
+                        isOffer ? "underline" : ""
+                    } hover:underline`}
                     on:click={() => {
-                        isOffer = !isOffer;
-                        isJobpend = false;
-                    }}>Offers</button
+                        isOffer = true;
+                        isJobPending = false;
+                    }}
                 >
+                    Offers
+                </button>
                 <button
-                    class={`cursor-pointer ${isJobpend ? "underline" : ""}`}
+                    class={`cursor-pointer ${
+                        isJobPending ? "underline" : ""
+                    } hover:underline`}
                     on:click={() => {
-                        isJobpend = !isJobpend;
+                        isJobPending = true;
                         isOffer = false;
-                    }}>Pending</button
+                    }}
                 >
+                    Pending
+                </button>
             </div>
         {/if}
+
+        <!-- Recruiter Group -->
+        <div
+            class="flex w-full border-b h-20 justify-between items-center px-4"
+        >
+            <h1>RECRUITER</h1>
+            <button
+                on:click={() => {
+                    isRecruiter = !isRecruiter;
+                    resetGroup("recruiter");
+                }}
+            >
+                <ChevronDown
+                    class={`transition-transform ${
+                        isRecruiter ? "rotate-180" : ""
+                    } hover:cursor-pointer hover:text-gray-600`}
+                />
+            </button>
+        </div>
+        <div
+            class={`flex flex-col w-full items-start px-10 py-4 gap-4 bg-[#33415549] transition-all duration-500 ${
+                isRecruiter ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            } overflow-hidden`}
+        >
+            <button
+                class={`cursor-pointer ${
+                    isApplicant ? "underline" : ""
+                } hover:underline`}
+                on:click={() => {
+                    isApplicant = true;
+                    isRecPending = false;
+                }}
+            >
+                Applicants
+            </button>
+            <button
+                class={`cursor-pointer ${
+                    isRecPending ? "underline" : ""
+                } hover:underline`}
+                on:click={() => {
+                    isRecPending = true;
+                    isApplicant = false;
+                }}
+            >
+                Pending
+            </button>
+        </div>
     </div>
+
+    <!-- Right Box -->
     <div class="flex flex-col w-full p-5 gap-4 overflow-scroll">
+        <!-- Job Seeker Content -->
         {#if isOffer}
             <Applicants />
             <Applicants />
             <Applicants />
             <Applicants />
         {/if}
-        {#if isJobpend}
+        {#if isJobPending}
+            <Padding />
+            <Padding />
+            <Padding />
+            <Padding />
+        {/if}
+
+        <!-- Recruiter Content -->
+        {#if isApplicant}
+            <Applicants />
+            <Applicants />
+            <Applicants />
+            <Applicants />
+        {/if}
+        {#if isRecPending}
             <Padding />
             <Padding />
             <Padding />

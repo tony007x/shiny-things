@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -78,6 +78,7 @@
 }
 
 html, body {
+  @apply font-inter;
   overscroll-behavior: none; /* ปิด overscroll */
   margin: 0;
   padding: 0;

@@ -13,7 +13,7 @@
             <h1><a href="/home">Home</a></h1>
             <h1><a href="/jobs">Jobs</a></h1>
             <h1><a href="/chat">Chat</a></h1>
-            <h1><a href="#logout"><LogOut /></a></h1>
+            <h1><a href="/authorization"><LogOut /></a></h1>
             <Avatar.Root>
                 <a href="/profile">
                     <Avatar.Image

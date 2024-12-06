@@ -1,8 +1,10 @@
 <script lang="ts">
     import Input from "$lib/components/ui/input/input.svelte";
+    import wretch from "wretch";
     //@ts-ignore
     import { Mail, Lock, Github, Facebook, User } from "lucide-svelte";
-
+    import { toast } from "svelte-sonner";
+    import { goto } from "$app/navigation";
     let isRegister: boolean = false;
 
     let username: string;
@@ -10,17 +12,39 @@
     let password: string;
     let confirmpassword: string;
 
-    const login = () => {
-        console.log(username);
-        console.log(password);
+    const login = async() => {
+        const response = await wretch('api/v1/auth/login')
+        .post({
+            username: username,
+            password: password
+        })
+        .badRequest(async(e)=>{
+            toast.error("User not found!")
+        })
+        .json();
+
+        if(response){
+            goto("/home")
+        }
     };
 
-    const register = () => {
-        console.log(username);
-        console.log(email);
-        console.log(password);
-        console.log(confirmpassword);
-    };
+    const register = async () => {
+        const response = await wretch("api/v1/auth/register")
+        .post({
+            username: username,
+            email: email,
+            password: password,
+            confirmpassword: confirmpassword
+        })
+        .badRequest( async (e)=>{
+            toast.error(JSON.parse(e.message).message)
+        })
+        .json();
+
+        if(response){
+            goto('/home')
+        }
+};
 </script>
 
 <div
@@ -138,22 +162,22 @@
 
     <!-- Right section with a background color -->
     <div
-        class="flex flex-col w-1/3 bg-[#40A2E3] relative justify-center items-center gap-10 "
+        class="flex flex-col w-1/3 bg-[#40A2E3] relative justify-center items-center gap-10"
     >
-        <img src="/triangle.png" alt="" class="absolute top-5 left-10 " />
+        <img src="/triangle.png" alt="" class="absolute top-5 left-10" />
         <img
             src="/triangle.png"
             alt=""
-            class="absolute right-14 top-[100px] rotate-45 w-16 "
+            class="absolute right-14 top-[100px] rotate-45 w-16"
         />
 
         <img
             src="/triangle.png"
             alt=""
-            class="absolute right-[100px] bottom-[20px] rotate-90 w-25 "
+            class="absolute right-[100px] bottom-[20px] rotate-90 w-25"
         />
 
-        <img src="/circle.png" alt="" class="absolute left-4 top-1/3 " />
+        <img src="/circle.png" alt="" class="absolute left-4 top-1/3" />
         <img
             src="/circle.png"
             alt=""
@@ -163,7 +187,7 @@
         <img
             src="/Rectangle.png"
             alt=""
-            class="absolute right-0 top-[280px] w-20 "
+            class="absolute right-0 top-[280px] w-20"
         />
 
         <img
@@ -188,10 +212,10 @@
             class="p-2 w-[200px] rounded-2xl bg-[#D9D9D9] hover:bg-[#bebebe] shadow-md duration-300"
             on:click={() => {
                 isRegister = !isRegister;
-                username = ''
-                email = ''
-                password = ''
-                confirmpassword = ''
+                username = "";
+                email = "";
+                password = "";
+                confirmpassword = "";
             }}
         >
             {isRegister ? "LOGIN" : "REGISTER"}

@@ -48,7 +48,7 @@
             <img src="/x.png" alt="x" class="h-[40px] w-[40px]">
         </div>
         <div class="flex justify-center">
-            <Button class = "text-[18px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-slate-300 rounded-2xl shadow-md"><Pen size={20}/>Edit Profile
+            <Button class = "text-[18px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"><Pen size={20}/>Edit Profile
             </Button>
         </div>
         <!-- </div> -->

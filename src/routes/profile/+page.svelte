@@ -12,7 +12,7 @@
     <div class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full gap-5 p-3">
         <!-- <div class="fixed gap-5 p-3 flex flex-col h-full border-r border-[green]"> -->
         <!--edit profile-->
-        <div class="text-[#656565] text-right ">
+        <div class="text-[#656565] text-right hover:underline">
             edit
         </div>
         <!--profile-->

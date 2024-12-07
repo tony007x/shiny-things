@@ -1,19 +1,56 @@
 <script lang="ts">
-    import Navbar from "../(components)/navbar.svelte";
     import * as Avatar from "$lib/components/ui/avatar/index.js";
     import { Button } from "$lib/components/ui/button/index.js";
     import Postelement from "../home/(component)/postelement.svelte";
+    import * as Dialog from "$lib/components/ui/dialog/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
     
     //@ts-ignore
-    import { Send, Pen } from "lucide-svelte";
+    import { Send, Pen, Book } from "lucide-svelte";
+
+    import wretch from "wretch";
+
+    let name:string;
+
+    const edit = async () => {
+        const sendProfile = await wretch('api/v1/profile/editprofile')
+        .post({
+            name: name
+        })
+        .json((c)=>{
+            console.log(name);
+        })
+    }
 </script>
 <div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[#FFF6E9]">
     <!-- left box -->
     <div class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full gap-5 p-3">
         <!-- <div class="fixed gap-5 p-3 flex flex-col h-full border-r border-[green]"> -->
         <!--edit profile-->
-        <div class="text-[#656565] text-right hover:underline">
-            edit
+        <div class="flex ml-auto">
+            <Dialog.Root>
+                <Dialog.Trigger class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100">
+                    edit
+                </Dialog.Trigger>
+                <Dialog.Content>
+                    <Dialog.Header>
+                        Edit Your Profile
+                    </Dialog.Header>
+                    <Dialog.Description class="flex flex-col w-full">
+                        <div>
+                            <div class="flex flex-col py-2 gap-2">
+                                <div class="">Name</div>
+                                <div class="w-full">
+                                    <Input class="w-full h-[32px]" placeholder="Enter your name" bind:value={name}></Input>
+                                </div>
+                                <div class="flex justify-center">
+                                    <Button class = "text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md">Submit</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </Dialog.Description>
+                </Dialog.Content>
+            </Dialog.Root>
         </div>
         <!--profile-->
         <div class="flex flex-col justify-center gap-2">
@@ -48,7 +85,8 @@
             <img src="/x.png" alt="x" class="h-[40px] w-[40px]">
         </div>
         <div class="flex justify-center">
-            <Button class = "text-[18px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"><Pen size={20}/>Edit Profile
+            <Button class = "text-[18px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md">
+                <Book size={20}/>Portfolio
             </Button>
         </div>
         <!-- </div> -->

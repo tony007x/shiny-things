@@ -6,19 +6,21 @@
     import { Input } from "$lib/components/ui/input/index.js";
     
     //@ts-ignore
-    import { Send, Pen, Book } from "lucide-svelte";
+    import { Send, Book } from "lucide-svelte";
 
     import wretch from "wretch";
 
-    let name:string;
+    let name:string = "Morty Smith";
+    let inputName:string;
 
     const edit = async () => {
-        const sendProfile = await wretch('api/v1/profile/editprofile')
+        const res= await wretch('api/v1/profile/profile')
         .post({
             name: name
         })
         .json((c)=>{
-            console.log(name);
+            name = inputName
+            console.log(name + " from front");
         })
     }
 </script>
@@ -41,10 +43,10 @@
                             <div class="flex flex-col py-2 gap-2">
                                 <div class="">Name</div>
                                 <div class="w-full">
-                                    <Input class="w-full h-[32px]" placeholder="Enter your name" bind:value={name}></Input>
+                                    <Input class="w-full h-[32px]" placeholder="Enter your name" value={inputName} on:input={(e) => inputName = e.target.value}></Input>
                                 </div>
                                 <div class="flex justify-center">
-                                    <Button class = "text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md">Submit</Button>
+                                    <Button class = "text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md" on:click={edit}>Submit</Button>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +67,7 @@
                     </Avatar.Root>
             </div>
             <!--name-->
-            <div class = "text-[32px] text-[#000000] text-center">Morty Smith</div>
+            <div class = "text-[32px] text-[#000000] text-center">{name}</div>
         </div>
         <!--send message-->
         <div class = "flex justify-center">

@@ -12,6 +12,7 @@
 
     let name:string = "Morty Smith";
     let inputName:string;
+    let DialogOpen:boolean;
 
     const edit = async () => {
         const res= await wretch('api/v1/profile/profile')
@@ -22,6 +23,8 @@
             name = inputName
             console.log(name + " from front");
         })
+        
+        DialogOpen = false;
     }
 </script>
 <div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[#FFF6E9]">
@@ -30,7 +33,7 @@
         <!-- <div class="fixed gap-5 p-3 flex flex-col h-full border-r border-[green]"> -->
         <!--edit profile-->
         <div class="flex ml-auto">
-            <Dialog.Root>
+            <Dialog.Root open={DialogOpen} onOpenChange={(open) => DialogOpen = open}>
                 <Dialog.Trigger class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100">
                     edit
                 </Dialog.Trigger>

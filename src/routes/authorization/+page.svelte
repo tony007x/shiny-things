@@ -18,8 +18,8 @@
             username: username,
             password: password
         })
-        .badRequest(async(e)=>{
-            toast.error("User not found!")
+        .unauthorized(async(e)=>{
+            toast.error(JSON.parse(e.message).message)
         })
         .json();
 
@@ -42,7 +42,7 @@
         .json();
 
         if(response){
-            goto('/home')
+            // goto('/home')
         }
 };
 </script>
@@ -83,7 +83,7 @@
                     <div class="relative w-full max-w-xs">
                         <Input
                             type="email"
-                            placeholder="FULL NAME"
+                            placeholder="EMAIL"
                             class="pl-10 w-full shadow-md"
                             required
                             bind:value={email}

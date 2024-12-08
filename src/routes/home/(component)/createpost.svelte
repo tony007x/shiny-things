@@ -7,8 +7,15 @@
   import { Textarea } from "$lib/components/ui/textarea/index.js";
 
   //@ts-ignore
-  import { Image, SquarePen, Settings } from "lucide-svelte";
+  import { Image, SquarePen, Settings,ChevronDown } from "lucide-svelte";
   import { Checkbox } from "$lib/components/ui/checkbox/index.js";
+  import { Select } from "bits-ui";
+
+
+  const postvisible = [
+    { value: "public", label: "Post to everyone" },
+    { value: "private", label: "Post to private" },
+  ];
 </script>
 
 <div class="flex flex-col w-full border h-fit m-4 rounded-xl p-2 bg-[#40A2E3]">
@@ -36,11 +43,26 @@
                   />
                   <Avatar.Fallback>CN</Avatar.Fallback>
                 </Avatar.Root>
-                <div class="flex flex-col border justify-between">
+                <div class="flex flex-col justify-between">
                   <h1 class="font-bold">Name</h1>
-                  <p>Post for Anyone</p>
+                  <Select.Root>
+                    <Select.Trigger class="flex w-[180px] text-start bg-gray-100 rounded-lg px-2 justify-between items-center">
+                      <Select.Value placeholder="Post visible" />
+                      <p><ChevronDown/></p>
+                    </Select.Trigger>
+                    <Select.Content class="bg-gray-100 border ">
+                      <Select.Group>
+                        {#each postvisible as post}
+                          <Select.Item class="hover:cursor-pointer hover:bg-gray-300" value={post.value} label={post.label}
+                            >{post.label}</Select.Item
+                          >
+                        {/each}
+                      </Select.Group>
+                    </Select.Content>
+                    <Select.Input name="favoriteFruit" />
+                  </Select.Root>
                 </div>
-                <Settings />
+                <!-- <Settings /> -->
               </div>
             </div>
           </Dialog.Description>
@@ -97,8 +119,8 @@
                   />
                   <Avatar.Fallback>CN</Avatar.Fallback>
                 </Avatar.Root>
-                <div class="flex flex-col border justify-between">
-                  <h1 class="font-bold">Name</h1>
+                <div class="flex flex-col justify-between">
+                  <h1 class="font-bold">Title</h1>
                   <p>Post for Anyone</p>
                 </div>
                 <Settings />
@@ -154,11 +176,26 @@
                   />
                   <Avatar.Fallback>CN</Avatar.Fallback>
                 </Avatar.Root>
-                <div class="flex flex-col border justify-between">
+                <div class="flex flex-col justify-between">
                   <h1 class="font-bold">Name</h1>
-                  <p>Post for Anyone</p>
+                  <Select.Root>
+                    <Select.Trigger class="flex w-[180px] text-start bg-gray-100 rounded-lg px-2 justify-between items-center">
+                      <Select.Value placeholder="Post visible" />
+                      <p><ChevronDown/></p>
+                    </Select.Trigger>
+                    <Select.Content class="bg-gray-100 border ">
+                      <Select.Group>
+                        {#each postvisible as post}
+                          <Select.Item class="hover:cursor-pointer hover:bg-gray-300" value={post.value} label={post.label}
+                            >{post.label}</Select.Item
+                          >
+                        {/each}
+                      </Select.Group>
+                    </Select.Content>
+                    <Select.Input name="favoriteFruit" />
+                  </Select.Root>
                 </div>
-                <Settings />
+                <!-- Change Visible post -->
               </div>
             </div>
           </Dialog.Description>

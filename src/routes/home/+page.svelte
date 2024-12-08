@@ -22,6 +22,8 @@
     <!-- middle box -->
     <div class="flex flex-col w-full p-5 gap-4 overflow-scroll">
         <Postelement/>
+        <Postelement/>
+        <Postelement/>
     </div>
 
     <!-- right box -->

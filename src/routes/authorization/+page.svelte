@@ -8,6 +8,7 @@
     let isRegister: boolean = false;
 
     let username: string;
+    let fullname: string;
     let email: string;
     let password: string;
     let confirmpassword: string;
@@ -32,6 +33,7 @@
         const response = await wretch("api/v1/auth/register")
         .post({
             username: username,
+            fullname: fullname,
             email: email,
             password: password,
             confirmpassword: confirmpassword
@@ -80,6 +82,18 @@
 
                 {#if isRegister}
                     <!-- Extra Username Field for Register -->
+                    <div class="relative w-full max-w-xs">
+                        <Input
+                            type="text"
+                            placeholder="FULL NAME"
+                            class="pl-10 w-full shadow-md"
+                            required
+                            bind:value={fullname}
+                        />
+                        <Mail
+                            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                        />
+                    </div>
                     <div class="relative w-full max-w-xs">
                         <Input
                             type="email"

@@ -16,6 +16,13 @@
     { value: "public", label: "Post to everyone" },
     { value: "private", label: "Post to private" },
   ];
+
+  let username:string;
+  let content: string;
+  const create = async()=>{
+    console.log(username)
+    console.log(content)
+  }
 </script>
 
 <div class="flex flex-col w-full border h-fit m-4 rounded-xl p-2 bg-[#40A2E3]">

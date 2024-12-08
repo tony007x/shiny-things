@@ -13,40 +13,46 @@
     let password: string;
     let confirmpassword: string;
 
-    const login = async() => {
-        const response = await wretch('api/v1/auth/login')
-        .post({
-            username: username,
-            password: password
-        })
-        .unauthorized(async(e)=>{
-            toast.error(JSON.parse(e.message).message)
-        })
-        .json();
+    interface LoginResponse {
+        token: string;
+        message?: string;
+    }
 
-        if(response){
+    const login = async () => {
+        const response: LoginResponse = await wretch("api/v1/auth/login")
+            .post({
+                username: username,
+                password: password,
+            })
+            .unauthorized(async (e) => {
+                toast.error(JSON.parse(e.message).message);
+            })
+            .json();
+
+        if (response && response.token) {
+            localStorage.setItem('token', response.token);
             goto("/home")
         }
     };
 
     const register = async () => {
         const response = await wretch("api/v1/auth/register")
-        .post({
-            username: username,
-            fullname: fullname,
-            email: email,
-            password: password,
-            confirmpassword: confirmpassword
-        })
-        .badRequest( async (e)=>{
-            toast.error(JSON.parse(e.message).message)
-        })
-        .json();
+            .post({
+                username: username,
+                fullname: fullname,
+                email: email,
+                password: password,
+                confirmpassword: confirmpassword,
+            })
+            .badRequest(async (e) => {
+                toast.error(JSON.parse(e.message).message);
+            })
+            .json();
 
-        if(response){
-            // goto('/home')
+        if (response) {
+            goto('/authorization')
         }
-};
+    };
 </script>
 
 <div

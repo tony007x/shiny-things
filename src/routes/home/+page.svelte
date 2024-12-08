@@ -1,9 +1,41 @@
 <script lang="ts">
+	import  wretch from 'wretch';
     import { Input } from "$lib/components/ui/input/index.js";
     import Post from "./(component)/createpost.svelte";
     import Postelement from "./(component)/postelement.svelte";
     import { Badge } from "$lib/components/ui/badge/index.js";
+    import { onMount } from "svelte";
+    import { goto } from '$app/navigation';
+    let errorMessage:string = "";
 
+    onMount(async () => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            try {
+                const response = await wretch("api/v1/auth/verify")
+                    .options({
+                        headers: {
+                            Authorization: `Bearer ${token}`, // ใช้ options เพื่อส่ง token ใน headers
+                        },
+                    })
+                    .get()
+                    .json();
+
+                if (response) {
+                    sessionStorage.setItem('userData', JSON.stringify(response));
+                } else {
+                    errorMessage = "Failed to fetch user data";
+                }
+            } catch (error) {
+                errorMessage = "An error occurred while fetching user data";
+                console.error(error);
+            }
+        } else {
+            errorMessage = "No token found. Please log in.";
+            goto("/login"); 
+        }
+    });
 </script>
 
 
@@ -21,8 +53,6 @@
 
     <!-- middle box -->
     <div class="flex flex-col w-full p-5 gap-4 overflow-scroll">
-        <Postelement/>
-        <Postelement/>
         <Postelement/>
     </div>
 

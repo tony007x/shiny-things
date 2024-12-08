@@ -11,16 +11,16 @@
     import wretch from "wretch";
 
     let name:string = "Morty Smith";
-    let inputName:string;
+    let inputName:string | null;
     let DialogOpen:boolean;
 
     const edit = async () => {
         const res= await wretch('api/v1/profile/profile')
-        .post({
+        .put({
             name: name
         })
         .json((c)=>{
-            name = inputName
+            name = inputName == null ? name : inputName;
             console.log(name + " from front");
         })
         

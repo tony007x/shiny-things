@@ -75,7 +75,11 @@
       like_count: 0
     })
     .json()
-    DialogOpen = false;
+
+    if(respone){
+      DialogOpen = false;
+      window.location.reload();
+    }
   };
 
   const toggleCheckbox = (option: number) => {

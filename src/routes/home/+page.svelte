@@ -7,23 +7,24 @@
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
 
+
+    //User
+    // interface TypeData {
+    //     id: number;
+    //     username: string;
+    //     fullname: string;
+    // }
+    // let profileData: TypeData;
+    // const infoUser = sessionStorage.getItem("userData");
+    // if (infoUser) {
+    //     profileData = JSON.parse(infoUser);
+    // }
+
+    
     onMount(async () => {
         const token = localStorage.getItem("token");
 
-        if (token) {
-            const response = await wretch("api/v1/auth/verify")
-                .options({
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .get()
-                .json();
-            if (response) {
-                const setStorage = JSON.stringify(response);
-                sessionStorage.setItem("userData", setStorage);
-            }
-        } else {
+        if (!token) {
             goto("/authorization");
         }
     });

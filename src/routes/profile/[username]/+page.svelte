@@ -40,8 +40,8 @@
         username: string;
         fullname: string;
     }
-    let username: string = "";
     let profileData: TypeData;
+    let username: string = "";
     //Validate Owner Profile
     let isOwn: boolean = false;
     onMount(async () => {

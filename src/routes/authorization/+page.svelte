@@ -30,7 +30,18 @@
             .json();
 
         if (response && response.token) {
-            localStorage.setItem('token', response.token);
+            localStorage.setItem("token", response.token);
+            const setSession = await wretch("api/v1/auth/verify")
+                .options({
+                    headers: {
+                        Authorization: `Bearer ${response.token}`,
+                    },
+                })
+                .get()
+                .json();
+            if(setSession){
+                sessionStorage.setItem("userData", JSON.stringify(setSession));
+            }
             goto("/home")
         }
     };
@@ -50,7 +61,7 @@
             .json();
 
         if (response) {
-            goto('/authorization')
+            goto("/authorization");
         }
     };
 </script>

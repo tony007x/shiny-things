@@ -10,16 +10,11 @@
     import wretch from "wretch";
     import { onMount } from "svelte";
     import { page } from "$app/stores";
+    import { json } from "@sveltejs/kit";
 
-    interface data {
-        id: number;
-        username: string;
-        fullname: string;
-    }
     let DialogOpen: boolean;
     let inputName: string | null = null;
     let name: string = "";
-    let userData: { id: number; username: string; fullname: string } | null = null;
 
     const edit = async () => {
         const res = await wretch("api/v1/profile/profile")
@@ -34,16 +29,40 @@
         DialogOpen = false;
     };
     const handleInput = (e: Event) => {
-        const target = e.target as HTMLInputElement | null; 
+        const target = e.target as HTMLInputElement | null;
         if (target) {
             inputName = target.value;
         }
     };
 
+    interface TypeData {
+        id: number;
+        username: string;
+        fullname: string;
+    }
+    let username: string = "";
+    let profileData: TypeData;
+    //Validate Owner Profile
+    let isOwn: boolean = false;
     onMount(async () => {
-        const dataUser = sessionStorage.getItem("userData");
-        if(dataUser){
-            userData = JSON.parse(dataUser)
+        const pathParts = window.location.pathname.split("/");
+        let ownUser = sessionStorage.getItem("userData");
+        username = pathParts[pathParts.length - 1];
+        console.log(username)
+        if (ownUser) {
+            ownUser = JSON.parse(ownUser).username
+            isOwn = (ownUser === username)? true: false;
+        }
+
+        if (username) {
+            try {
+                const response = await wretch(`/api/v1/profile/${username}`)
+                    .get()
+                    .json<TypeData>();
+                profileData = response;
+            } catch (error) {
+                console.error("Error fetching profile:", error);
+            }
         }
     });
 </script>
@@ -104,19 +123,21 @@
                 </Avatar.Root>
             </div>
             <!--name-->
-            {#if userData}
+            {#if profileData}
                 <div class="text-[32px] text-[#000000] text-center">
-                    {userData.fullname}
+                    {profileData.fullname}
                 </div>
             {/if}
         </div>
         <!--send message-->
-        <div class="flex justify-center">
-            <Button
-                class="text-[#000000] text-[16px] rounded-2xl gap-2 hover:bg-slate-300 w-fit h-fit bg-[#D9D9D9] shadow-md"
-                ><Send size={20} />Send Message</Button
-            >
-        </div>
+        {#if isOwn}
+            <div class="flex justify-center">
+                <Button
+                    class="text-[#000000] text-[16px] rounded-2xl gap-2 hover:bg-slate-300 w-fit h-fit bg-[#D9D9D9] shadow-md"
+                    ><Send size={20} />Send Message</Button
+                >
+            </div>
+        {/if}
         <!--Other..-->
         <div class="flex flex-col justify-start gap-2">
             <div class="text-[black] text-[20px]">Skill</div>

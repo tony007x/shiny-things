@@ -17,6 +17,7 @@
         post_tag_name: string;
         like_count: number;
         is_visible: boolean;
+        created_at: string;
     }
 
     let postsStorage: Post[] = [];
@@ -51,7 +52,7 @@
                 <div class="text-white">
                     <h1>{data.fullname}</h1>
                     <div class="flex gap-4 items-center">
-                        <h2>20 Dec 2024</h2>
+                        <h2>{data.created_at}</h2>
                         <Badge
                             class="flex justify-center items-center w-fit h-fit bg-gray-500 text-white rounded-lg px-4 py-0"
                             >{data.post_tag_name}</Badge

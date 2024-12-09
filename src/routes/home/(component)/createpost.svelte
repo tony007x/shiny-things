@@ -54,6 +54,7 @@
   let visibility: any = true;
   let tags:any = postTags[0].value; // Default to first tag
   let type: number | null = null;
+  let DialogOpen: boolean;
 
   const create = async () => {
     console.log("userid:", profileData?.id);
@@ -74,6 +75,7 @@
       like_count: 0
     })
     .json()
+    DialogOpen = false;
   };
 
   const toggleCheckbox = (option: number) => {
@@ -88,7 +90,7 @@
       <Avatar.Fallback>CN</Avatar.Fallback>
     </Avatar.Root>
 
-    <Dialog.Root>
+    <Dialog.Root open={DialogOpen} onOpenChange={(open) => (DialogOpen = open)}>
       <Dialog.Trigger
         class="text-gray-500 bg-white rounded-2xl w-full text-left pl-4 py-2 hover:bg-gray-200"
       >

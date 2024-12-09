@@ -6,10 +6,12 @@
     //@ts-ignore
     import { Settings2, ThumbsUp, MessageCircle } from "lucide-svelte";
     import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
 
     interface Post {
         id: number;
         user_id: number;
+        username: string;
         fullname: string;
         title: string;
         content: string;
@@ -41,13 +43,21 @@
     >
         <div class="flex gap-3 items-center">
             <!-- Top -->
-            <Avatar.Root>
-                <Avatar.Image
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                />
-                <Avatar.Fallback>{data.fullname[0]}{data.fullname[1]}</Avatar.Fallback>
-            </Avatar.Root>
+            <button
+                on:click={() => {
+                    goto(`/profile/${data.username}`);
+                }}
+            >
+                <Avatar.Root>
+                    <Avatar.Image
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                    />
+                    <Avatar.Fallback
+                        >{data.fullname[0]}{data.fullname[1]}</Avatar.Fallback
+                    >
+                </Avatar.Root>
+            </button>
             <div class="flex w-full justify-between">
                 <div class="text-white">
                     <h1>{data.fullname}</h1>

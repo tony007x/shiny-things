@@ -40,6 +40,9 @@
                 name = inputName == null ? name : inputName;
                 skill = inputSkill == null ? skill : inputSkill;
                 education = inputEducation == null ? education : inputEducation;
+                facebook = inputFacebook == null ? facebook : inputFacebook;
+                github = inputGithub == null ? github : inputGithub;
+                x = inputX == null ? x : inputX;
                 // console.log(name + " from front");
             });
 
@@ -210,25 +213,25 @@
         <!--Other..-->
         <div class="flex flex-col justify-start gap-2">
             <div class="text-[black] text-[20px]">Skill</div>
-            <div class="text-[black] text-[18px]">{skill}</div>
+            <div class="text-[black] text-[18px]">{profileData.skill}</div>
             <div class="text-[black] text-[20px]">Education</div>
-            <div class="text-[black] text-[18px]">{education}</div>
+            <div class="text-[black] text-[18px]">{profileData.education}</div>
         </div>
         <div class="flex flex-col justify-start gap-2">
             <!--Facebook-->
             <div class = "flex flex-row">
                 <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
-                <div class="text-[black] text-[18px] py-1 ml-auto">{facebook}</div>
+                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.facebook}</div>
             </div>
             <!--Github-->
             <div class = "flex flex-row">
                 <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
-                <div class="text-[black] text-[18px] py-1 ml-auto">{github}</div>
+                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.github}</div>
             </div>
             <!--X-->
             <div class = "flex flex-row">
                 <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
-                <div class="text-[black] text-[18px] py-1 ml-auto">{x}</div>
+                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.x}</div>
             </div>
         </div>
         <div class="flex justify-center">

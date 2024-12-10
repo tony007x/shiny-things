@@ -47,6 +47,7 @@
         }
     };
 
+    // uncompleted function
     const updatePicture = async () => {
         try {
             const res = await wretch("api/v1/users/updatePortfolioPicture")
@@ -81,7 +82,7 @@
         class="flex flex-col w-3/4 min-h-[250px] border gap-3 p-3 rounded-3xl shadow-md bg-[#D9D9D9]"
     >
         <!-- Dialog -->
-        <div class="flex flex-col items-end">
+        <div id="contextEdit" class="flex flex-col items-end">
             <Dialog.Root>
                 <Dialog.Trigger
                 class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100"
@@ -92,14 +93,19 @@
                     <Dialog.Header>
                         <Dialog.Title>Editing Portfolio Context</Dialog.Title>
                         <Dialog.Description>
-                            <Input
-                                type="text"
-                                bind:value={context_edit}
-                                class="bg-white border rounded p-2"
-                            />
-                            <Button variant="outline" on:click={updateContext}>
-                                Submit
-                            </Button>
+                            <div class="flex flex-row">
+                                <Input
+                                    type="text"
+                                    bind:value={context_edit}
+                                    class="bg-white border rounded p-2"
+                                />
+                                <Button 
+                                variant="outline" 
+                                class="flex items-center" 
+                                on:click={updateContext}>
+                                    Submit
+                                </Button>
+                            </div>
                         </Dialog.Description>
                     </Dialog.Header>
                 </Dialog.Content>
@@ -113,7 +119,7 @@
         class="flex flex-col w-1/4 min-h-[250px] border gap-3 p-3 rounded-3xl shadow-md bg-[#D9D9D9]"
     >
         <!-- Dialog -->
-    <div class="flex flex-col items-end">
+    <div id="pictureEdit" class="flex flex-col items-end">
         <Dialog.Root>
             <Dialog.Trigger
             class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100"

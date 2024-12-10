@@ -67,7 +67,7 @@
     });
 </script>
 
-<div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[#FFF6E9]">
+<div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[BBE2EC]">
     <!-- left box -->
     <div
         class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full gap-5 p-3"

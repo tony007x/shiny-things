@@ -14,16 +14,24 @@
 
     let DialogOpen: boolean;
     let inputName: string | null = null;
+    let inputSkill : string | null = null;
+    let inputEducation: string | null = null;
     let name: string = "";
+    let skill: string = "";
+    let education: string = "";
 
     const edit = async () => {
         const res = await wretch("api/v1/profile/profile")
             .put({
                 name: name,
+                skill : skill,
+                education : education
             })
             .json((c) => {
                 name = inputName == null ? name : inputName;
-                console.log(name + " from front");
+                skill = inputSkill == null ? skill : inputSkill;
+                education = inputEducation == null ? education : inputEducation;
+                // console.log(name + " from front");
             });
 
         DialogOpen = false;
@@ -90,11 +98,29 @@
                         <div>
                             <div class="flex flex-col py-2 gap-2">
                                 <div class="">Name</div>
-                                <div class="w-full">
+                                <div class="w-full gap-1">
                                     <Input
                                         class="w-full h-[32px]"
                                         placeholder="Enter your name"
                                         value={inputName}
+                                        on:input={handleInput}
+                                        ></Input>
+                                </div>
+                                <div class="">Skill</div>
+                                <div class="w-full">
+                                    <Input
+                                        class="w-full h-[32px]"
+                                        placeholder="Enter your skill"
+                                        value={inputSkill}
+                                        on:input={handleInput}
+                                    ></Input>
+                                </div>
+                                <div class="">Education</div>
+                                <div class="w-full">
+                                    <Input
+                                        class="w-full h-[32px]"
+                                        placeholder="Enter your education"
+                                        value={inputEducation}
                                         on:input={handleInput}
                                     ></Input>
                                 </div>
@@ -141,7 +167,9 @@
         <!--Other..-->
         <div class="flex flex-col justify-start gap-2">
             <div class="text-[black] text-[20px]">Skill</div>
+            <div class="text-[black] text-[18px]">{skill}</div>
             <div class="text-[black] text-[20px]">Education</div>
+            <div class="text-[black] text-[18px]">{education}</div>
         </div>
         <div class="flex flex-col justify-start gap-2">
             <!--Facebook-->

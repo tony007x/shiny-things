@@ -1,7 +1,6 @@
 <script lang="ts">
     import { toast } from "svelte-sonner";
     import PortfolioBoxPerform from "./(component)/PortfolioBoxPerform.svelte";
-    import PortfolioBoxSkill from "./(component)/PortfolioBoxSkill.svelte";
     import wretch from "wretch";
 
     // รับค่าจาก API และแสดงข้อความใน UI
@@ -53,9 +52,6 @@
     {#each portDatailArr as detailEach}
         <PortfolioBoxPerform detail={detailEach} />
     {/each}
-
-    <!-- ใช้ PortfolioBoxSkill -->
-    <PortfolioBoxSkill />
 
     <!-- ช่องข้อความสำหรับส่งข้อมูล -->
     <div class="mt-4">

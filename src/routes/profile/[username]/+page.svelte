@@ -16,16 +16,25 @@
     let inputName: string | null = null;
     let inputSkill : string | null = null;
     let inputEducation: string | null = null;
+    let inputFacebook : string | null = null;
+    let inputGithub : string | null = null;
+    let inputX : string | null = null;
     let name: string = "";
     let skill: string = "";
     let education: string = "";
+    let facebook: string = "";
+    let github : string = "";
+    let x : string = "";
 
     const edit = async () => {
         const res = await wretch("api/v1/profile/profile")
             .put({
                 name: name,
                 skill : skill,
-                education : education
+                education : education,
+                facebook : facebook,
+                github : github,
+                x : x
             })
             .json((c) => {
                 name = inputName == null ? name : inputName;
@@ -36,6 +45,7 @@
 
         DialogOpen = false;
     };
+
     const handleInput = (e: Event) => {
         const target = e.target as HTMLInputElement | null;
         if (target) {
@@ -47,7 +57,13 @@
         id: number;
         username: string;
         fullname: string;
+        skill : string;
+        education : string;
+        facebook : string;
+        github : string;
+        x : string;
     }
+
     let profileData: TypeData;
     let username: string = "";
     //Validate Owner Profile
@@ -124,6 +140,33 @@
                                         on:input={handleInput}
                                     ></Input>
                                 </div>
+                                <div class="">Facebook</div>
+                                <div class="w-full">
+                                    <Input
+                                        class="w-full h-[32px]"
+                                        placeholder="Enter your facebook"
+                                        value={inputFacebook}
+                                        on:input={handleInput}
+                                    ></Input>
+                                </div>
+                                <div class="">Github</div>
+                                <div class="w-full">
+                                    <Input
+                                        class="w-full h-[32px]"
+                                        placeholder="Enter your github"
+                                        value={inputGithub}
+                                        on:input={handleInput}
+                                    ></Input>
+                                </div>
+                                <div class="">X</div>
+                                <div class="w-full">
+                                    <Input
+                                        class="w-full h-[32px]"
+                                        placeholder="Enter your X"
+                                        value={inputX}
+                                        on:input={handleInput}
+                                    ></Input>
+                                </div>
                                 <div class="flex justify-center">
                                     <Button
                                         class="text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"
@@ -173,11 +216,20 @@
         </div>
         <div class="flex flex-col justify-start gap-2">
             <!--Facebook-->
-            <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
+            <div class = "flex flex-row">
+                <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
+                <div class="text-[black] text-[18px] py-1 ml-auto">{facebook}</div>
+            </div>
             <!--Github-->
-            <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
+            <div class = "flex flex-row">
+                <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
+                <div class="text-[black] text-[18px] py-1 ml-auto">{github}</div>
+            </div>
             <!--X-->
-            <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
+            <div class = "flex flex-row">
+                <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
+                <div class="text-[black] text-[18px] py-1 ml-auto">{x}</div>
+            </div>
         </div>
         <div class="flex justify-center">
             <Button

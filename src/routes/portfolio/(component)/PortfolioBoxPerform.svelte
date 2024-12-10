@@ -124,7 +124,7 @@
                 <Dialog.Header>
                     <Dialog.Title>Editing Portfolio Picture</Dialog.Title>
                     <Dialog.Description>
-                        <div class="flex w-full w-fit items-center space-x-2">
+                        <div class="flex w-fit items-center space-x-2">
                         <Input
                             id="picture"
                             type="file"

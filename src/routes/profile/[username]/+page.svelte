@@ -43,15 +43,15 @@
     let profileData: TypeData;
     let username: string = "";
     //Validate Owner Profile
-    let isOwn: boolean = false;
+    let isOwn: boolean = true;
     onMount(async () => {
         const pathParts = window.location.pathname.split("/");
         let ownUser = sessionStorage.getItem("userData");
         username = pathParts[pathParts.length - 1];
-        console.log(username)
+        console.log(isOwn)
         if (ownUser) {
             ownUser = JSON.parse(ownUser).username
-            isOwn = (ownUser === username)? true: false;
+            isOwn = (ownUser === username)? false: true;
         }
 
         if (username) {

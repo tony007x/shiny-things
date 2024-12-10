@@ -6,10 +6,12 @@
     //@ts-ignore
     import { Settings2, ThumbsUp, MessageCircle } from "lucide-svelte";
     import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
 
     interface Post {
         id: number;
         user_id: number;
+        username: string;
         fullname: string;
         title: string;
         content: string;
@@ -17,6 +19,7 @@
         post_tag_name: string;
         like_count: number;
         is_visible: boolean;
+        created_at: string;
     }
 
     let postsStorage: Post[] = [];
@@ -40,18 +43,26 @@
     >
         <div class="flex gap-3 items-center">
             <!-- Top -->
-            <Avatar.Root>
-                <Avatar.Image
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                />
-                <Avatar.Fallback>{data.fullname[0]}{data.fullname[1]}</Avatar.Fallback>
-            </Avatar.Root>
+            <button
+                on:click={() => {
+                    goto(`/profile/${data.username}`);
+                }}
+            >
+                <Avatar.Root>
+                    <Avatar.Image
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                    />
+                    <Avatar.Fallback
+                        >{data.fullname[0]}{data.fullname[1]}</Avatar.Fallback
+                    >
+                </Avatar.Root>
+            </button>
             <div class="flex w-full justify-between">
                 <div class="text-white">
                     <h1>{data.fullname}</h1>
                     <div class="flex gap-4 items-center">
-                        <h2>20 Dec 2024</h2>
+                        <h2>{data.created_at}</h2>
                         <Badge
                             class="flex justify-center items-center w-fit h-fit bg-gray-500 text-white rounded-lg px-4 py-0"
                             >{data.post_tag_name}</Badge

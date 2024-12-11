@@ -1,19 +1,21 @@
 <script lang="ts">
+    import { Description } from "formsnap";
     import wretch from "wretch";
     import * as Avatar from "$lib/components/ui/avatar/index.js";
     import { Badge } from "$lib/components/ui/badge/index.js";
     import { Button } from "$lib/components/ui/button/index.js";
     import * as Drawer from "$lib/components/ui/drawer/index.js";
-
-    //@ts-ignore
-    import { Settings2, ThumbsUp, MessageCircle } from "lucide-svelte";
-    import { onMount } from "svelte";
-    import { goto } from "$app/navigation";
+    import * as Sheet from "$lib/components/ui/sheet/index.js";
     import { Textarea } from "$lib/components/ui/textarea/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
-    import { toast } from "svelte-sonner";
+    import { Select } from "bits-ui";
 
+    //@ts-ignore
+    import { Settings, ThumbsUp, MessageCircle, ChevronDown } from "lucide-svelte";
+    import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
+    import { toast } from "svelte-sonner";
 
     //drawer
     let DrawerOpen: boolean;
@@ -24,34 +26,52 @@
         fullname: string;
     }
     let profileData: TypeData;
-    const infoUser = sessionStorage.getItem("userData");
-    if (infoUser) {
-        profileData = JSON.parse(infoUser);
-    }
 
     //For Offer/Apply
-    let sender: string;
     let content: string;
 
-    const applyoffer = async (post_id:number, post_type: string) => {
-        console.log("sender id: ", profileData.id)
-        console.log("post_id: ", post_id)
-        console.log("post_type: ", post_type)
+    const applyoffer = async (post_id: number, post_type: string) => {
+        console.log("sender id: ", profileData.id);
+        console.log("post_id: ", post_id);
+        console.log("post_type: ", post_type);
         console.log("content: ", content);
 
-        const response: {message: string} = await wretch('api/v1/manage/offerapply')
-        .post({
-            sender_id: profileData.id,
-            post_id: post_id,
-            content: content,
-            post_type: post_type
-        }).json()
+        const response: { message: string } = await wretch(
+            "api/v1/manage/offerapply",
+        )
+            .post({
+                sender_id: profileData.id,
+                post_id: post_id,
+                content: content,
+                post_type: post_type,
+            })
+            .json();
 
-        if(response){
-            toast.success(response.message)
+        if (response) {
+            toast.success(response.message);
             DrawerOpen = false;
         }
     };
+    //edit-post
+    let newTitle: string;
+    let newContent: string;
+    let visibility: any = true;
+
+    const postvisible = [
+        { value: true, label: "Public" },
+        { value: false, label: "Private" },
+    ];
+
+    const editPost = async (post_id: number,post_title: string,post_content: string,visibility_post: boolean) => {
+        console.log(post_id);
+        console.log(newTitle ?? post_title);
+        console.log(newContent ?? post_content);
+        console.log(visibility);
+    };
+
+    const delelePost = async(post_id: number)=>{
+        console.log(post_id);
+    }
 
     interface Post {
         id: number;
@@ -70,12 +90,16 @@
     let postsStorage: Post[] = [];
 
     onMount(async () => {
+        const infoUser = await sessionStorage.getItem("userData");
+        if (infoUser) {
+            profileData = await JSON.parse(infoUser);
+        }
         try {
             const response: Post[] = await wretch("api/v1/posts/get-post")
                 .get()
                 .json<Post[]>();
 
-            postsStorage = response;
+                postsStorage = response.filter(post => post.is_visible);
         } catch (error) {
             console.error("Error loading posts:", error);
         }
@@ -115,7 +139,102 @@
                     </div>
                 </div>
                 <div class="flex flex-col items-end justify-between">
-                    <Settings2 color="white" />
+                    {#if data.user_id == profileData.id}
+                        <Sheet.Root>
+                            <Sheet.Trigger asChild let:builder>
+                                <Button builders={[builder]} variant="link"
+                                    ><Settings
+                                        color="white"
+                                        class="hover:stroke-gray-300"
+                                    />
+                                </Button>
+                            </Sheet.Trigger>
+                            <Sheet.Content side="right">
+                                <Sheet.Header>
+                                    <Sheet.Title>Edit Post</Sheet.Title>
+                                    <Sheet.Description>
+                                        Make changes to your post here. Click
+                                        save when you're done.
+                                    </Sheet.Description>
+                                </Sheet.Header>
+                                <div class="flex flex-col gap-4 mt-4">
+                                    <Label class="font-bold">Visibility</Label>
+                                    <Select.Root
+                                        onSelectedChange={(s) => {
+                                            visibility = s?.value;
+                                        }}
+                                    >
+                                        <Select.Trigger
+                                            class="flex w-[180px] text-left bg-gray-100 rounded-lg px-3 justify-between items-center"
+                                        >
+                                            <Select.Value
+                                                placeholder={data.is_visible? "Public" : "Private"}
+                                            />
+                                            <ChevronDown />
+                                        </Select.Trigger>
+                                        <Select.Content
+                                            class="bg-gray-100 border border-gray-300 rounded-lg"
+                                        >
+                                            <Select.Group>
+                                                {#each postvisible as post}
+                                                    <Select.Item
+                                                        class="hover:cursor-pointer hover:bg-gray-300 px-4 py-2"
+                                                        value={post.value}
+                                                    >
+                                                        {post.label}
+                                                    </Select.Item>
+                                                {/each}
+                                            </Select.Group>
+                                        </Select.Content>
+                                    </Select.Root>
+                                </div>
+                                <div class="flex flex-col gap-2 mt-4">
+                                    <div class="flex flex-col gap-2">
+                                        <Label class="font-bold"
+                                            >Title</Label
+                                        >
+                                        <Input
+                                            bind:value={newTitle}
+                                            placeholder={data.title}
+                                            class=" h-auto w-full flex"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2 mt-4">
+                                    <div class="flex flex-col gap-2">
+                                        <Label class="font-bold"
+                                            >Descriptions</Label
+                                        >
+                                        <Textarea
+                                            bind:value={newContent}
+                                            placeholder={data.content}
+                                            class="min-h-[150px] max-h-[300px] h-auto w-full flex"
+                                        />
+                                    </div>
+                                </div>
+                                <Sheet.Footer>
+                                    <Sheet.Close asChild let:builder>
+                                        <div>
+                                            <Button type="submit" class="bg-red-500 hover:bg-red-300" on:click={()=>delelePost(data.id)}>
+                                                Delete
+                                            </Button>
+                                            <Button
+                                                builders={[builder]}
+                                                type="submit"
+                                                class="mt-3"
+                                                on:click={() =>
+                                                    editPost(
+                                                        data.id,
+                                                        data.title,
+                                                        data.content,
+                                                        visibility
+                                                    )}>Save changes</Button>
+                                        </div>
+                                    </Sheet.Close>
+                                </Sheet.Footer>
+                            </Sheet.Content>
+                        </Sheet.Root>
+                    {/if}
                     <Drawer.Root open={DrawerOpen}>
                         {#if data.post_type_name !== "general"}
                             <Drawer.Trigger
@@ -163,7 +282,13 @@
                                 <Drawer.Footer
                                     class="flex justify-end space-x-4"
                                 >
-                                    <Button on:click={()=> applyoffer(data.id, data.post_type_name)}>
+                                    <Button
+                                        on:click={() =>
+                                            applyoffer(
+                                                data.id,
+                                                data.post_type_name,
+                                            )}
+                                    >
                                         {#if data.post_type_name == "seeker"}
                                             OFFER
                                         {:else}

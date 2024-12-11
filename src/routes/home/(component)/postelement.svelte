@@ -3,6 +3,8 @@
     import * as Avatar from "$lib/components/ui/avatar/index.js";
     import { Badge } from "$lib/components/ui/badge/index.js";
     import { Button } from "$lib/components/ui/button/index.js";
+    import * as Drawer from "$lib/components/ui/drawer/index.js";
+
     //@ts-ignore
     import { Settings2, ThumbsUp, MessageCircle } from "lucide-svelte";
     import { onMount } from "svelte";
@@ -31,6 +33,7 @@
                 .json<Post[]>();
 
             postsStorage = response;
+            console.log(postsStorage[0]);
         } catch (error) {
             console.error("Error loading posts:", error);
         }
@@ -71,10 +74,43 @@
                 </div>
                 <div class="flex flex-col items-end justify-between">
                     <Settings2 color="white" />
-                    <Button
-                        class="px-4 h-4 bg-white text-black rounded-full text-[10px] font-bold hover:bg-slate-300"
-                        >Apply</Button
-                    >
+                    <Drawer.Root>
+                        {#if data.post_type_name !== "general"}
+                            <Drawer.Trigger
+                                class="px-4 h-4 bg-white text-black rounded-full text-[10px] font-bold hover:bg-slate-300"
+                            >
+                                {#if data.post_type_name == "seeker"}
+                                    OFFER
+                                {:else}
+                                    APPLY
+                                {/if}
+                            </Drawer.Trigger>
+                        {/if}
+                        <div class="flex border border-[red]">
+                            <Drawer.Content
+                                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                            >
+                                <div
+                                    class="w-[90%] max-w-[500px] h-[100vh] bg-white p-4 rounded-lg shadow-lg overflow-auto"
+                                >
+                                    <Drawer.Header>
+                                        <Drawer.Title>
+                                            {data.title}
+                                        </Drawer.Title>
+                                        <Drawer.Description>
+                                            {data.content}
+                                        </Drawer.Description>
+                                    </Drawer.Header>
+                                    <Drawer.Footer
+                                        class="flex justify-end space-x-4"
+                                    >
+                                        <Button>Submit</Button>
+                                        <Drawer.Close>Cancel</Drawer.Close>
+                                    </Drawer.Footer>
+                                </div>
+                            </Drawer.Content>
+                        </div>
+                    </Drawer.Root>
                 </div>
             </div>
         </div>

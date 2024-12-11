@@ -3,12 +3,13 @@
     import { Button } from "$lib/components/ui/button/index.js";
     import * as Dialog from "$lib/components/ui/dialog/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
-
+    import PostProfile from "../(components)/postProfile.svelte";
     //@ts-ignore
     import { Send, Book, PenLine } from "lucide-svelte";
 
     import wretch from "wretch";
     import { onMount } from "svelte";
+    import { invalidateAll } from '$app/navigation';
     import { page } from "$app/stores";
     import { json } from "@sveltejs/kit";
     import { Description } from "formsnap";
@@ -129,6 +130,7 @@
             }
         }
     });
+
 </script>
 
 <div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[BBE2EC]">
@@ -260,11 +262,11 @@
         {/if}
         <!--Other..-->
         <div class="flex flex-col justify-start gap-2">
-            <div class="text-[black] text-[20px]">Skill</div>
+            <div class="text-[black] text-[20px] font-bold">Skill</div>
             {#if profileData}
             <div class="text-[black] text-[18px]">{profileData.skill}</div>
             {/if}
-            <div class="text-[black] text-[20px]">Education</div>
+            <div class="text-[black] text-[20px] font-bold">Education</div>
             {#if profileData}
             <div class="text-[black] text-[18px]">{profileData.education}</div>
             {/if}
@@ -274,21 +276,21 @@
             <div class = "flex flex-row">
                 <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
                 {#if profileData}
-                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.facebook}</div>
+                <div class="text-[black] text-[18px] py-1 ml-5 underline hover:text-blue-500"><a href={profileData.facebook}>Facebook</a></div>
                 {/if}
             </div>
             <!--Github-->
             <div class = "flex flex-row">
                 <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
                 {#if profileData}
-                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.github}</div>
+                <div class="text-[black] text-[18px] py-1 ml-5 underline hover:text-blue-500"><a href={profileData.github}>Github</a></div>
                 {/if}
             </div>
             <!--X-->
-            <div class = "flex flex-row">
+            <div class = "flex">
                 <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
                 {#if profileData}
-                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.x}</div>
+                <div class="text-[black] text-[18px] py-1 ml-5 underline hover:text-blue-500"><a href={profileData.x}>X</a></div>
                 {/if}
             </div>
         </div>
@@ -304,7 +306,7 @@
 
     <!-- middle box -->
     <div class="flex flex-col w-full p-5 gap-4 overflow-scroll">
-        <!-- <Postelement /> -->
+        <PostProfile />
     </div>
 
     <!-- right box -->

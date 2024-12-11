@@ -88,18 +88,22 @@
     }
 
     let postsStorage: Post[] = [];
-
+    
     onMount(async () => {
         const infoUser = await sessionStorage.getItem("userData");
+        const pathParts = window.location.pathname.split("/");
+        let pathName = pathParts[pathParts.length - 1];
+
         if (infoUser) {
             profileData = await JSON.parse(infoUser);
         }
-        try { 
-            const response: Post[] = await wretch("api/v1/posts/get-post")
+        try {
+            const response: Post[] = await wretch("../api/v1/posts/get-post")
                 .get()
                 .json<Post[]>();
 
-                postsStorage = response.filter(post => post.is_visible);
+                postsStorage = response.filter(post => post.username == pathName);
+                console.log(postsStorage)
         } catch (error) {
             console.error("Error loading posts:", error);
         }

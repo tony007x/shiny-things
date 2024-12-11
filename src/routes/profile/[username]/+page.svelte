@@ -19,7 +19,8 @@
     let inputFacebook : string | null = null;
     let inputGithub : string | null = null;
     let inputX : string | null = null;
-    let name: string = "";
+    let userId : number;
+    let fullname: string = "";
     let skill: string = "";
     let education: string = "";
     let facebook: string = "";
@@ -27,13 +28,21 @@
     let x : string = "";
 
     const test = async() =>{
-        const res = await wretch("api/v1/users/see-user").get().json()
+        const res = await wretch("../api/v1/users/see-user").get().json()
     }
 
     const edit = async () => {
-        const res = await wretch("api/v1/users/edit")
+        fullname = inputName == null ? fullname : inputName;
+        skill = inputSkill == null ? skill : inputSkill;
+        education = inputEducation == null ? education : inputEducation;
+        facebook = inputFacebook == null ? facebook : inputFacebook;
+        github = inputGithub == null ? github : inputGithub;
+        x = inputX == null ? x : inputX;
+        
+        const res = await wretch("../api/v1/profiles/edit")
             .put({
-                name: name,
+                id:userId,
+                fullname: fullname,
                 skill : skill,
                 education : education,
                 facebook : facebook,
@@ -101,13 +110,16 @@
         console.log(isOwn)
         
         if (ownUser) {
+            // console.log(JSON.parse(ownUser))
+            // console.log(typeof(ownUser))
+            userId = JSON.parse(ownUser).id
             ownUser = JSON.parse(ownUser).username
             isOwn = (ownUser === username)? false: true;
         }
 
         if (username) {
             try {
-                const response = await wretch(`/api/v1/profile/${username}`)
+                const response = await wretch(`/api/v1/profiles/${username}`)
                     .get()
                     .json<TypeData>();
                 profileData = response;
@@ -196,7 +208,7 @@
                                     <div class="flex justify-center">
                                         <Button
                                             class="text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"
-                                            on:click={test}>Submit</Button
+                                            on:click={edit}>Submit</Button
                                         >
                                     </div>
                                 </div>

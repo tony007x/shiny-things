@@ -5,7 +5,7 @@
     import { Input } from "$lib/components/ui/input/index.js";
 
     //@ts-ignore
-    import { Send, Book, PenLine } from "lucide-svelte";
+    import { Send, Book, PenLine, X } from "lucide-svelte";
 
     import wretch from "wretch";
     import { onMount } from "svelte";
@@ -21,28 +21,64 @@
     let inputGithub : string | null = null;
     let inputX : string | null = null;
     let userId : number;
-    let fullname: string = "";
-    let skill: string = "";
-    let education: string = "";
-    let facebook: string = "";
-    let github : string = "";
-    let x : string = "";
-
+    let removeSkill = false;
+    let removeEducation = false;
+    let removeFacebook = false;
+    let removeGithub = false;
+    let removeX = false;
+    
     const test = async() =>{
         const res = await wretch("../api/v1/users/see-user").get().json()
     }
-
+    
     const edit = async () => {
-        fullname = inputName == null ? fullname : inputName;
-        skill = inputSkill == null ? skill : inputSkill;
-        education = inputEducation == null ? education : inputEducation;
-        facebook = inputFacebook == null ? facebook : inputFacebook;
-        github = inputGithub == null ? github : inputGithub;
-        x = inputX == null ? x : inputX;
+        let fullname: string = profileData.fullname;
+        let skill: string = profileData.skill;
+        let education: string = profileData.education;
+        let facebook: string = profileData.facebook;
+        let github : string = profileData.github;
+        let x : string = profileData.x;
+
+        fullname = (inputName == null || inputName === "") ? fullname : inputName;
+        skill = (inputSkill == null || inputSkill === "") ? skill : inputSkill;
+        education = (inputEducation == null || inputEducation === "") ? education : inputEducation;
+        facebook = (inputFacebook == null || inputFacebook === "") ? facebook : inputFacebook;
+        github = (inputGithub == null || inputGithub === "") ? github : inputGithub;
+        x = (inputX == null || inputX === "") ? x : inputX;
+
+        if(removeSkill == true){
+            skill = "";
+            inputSkill = "";
+            removeSkill = false;
+        }
+
+        if(removeEducation == true){
+            education = "";
+            inputEducation = "";
+            removeEducation = false;
+        }
+
+        if(removeFacebook == true){
+            facebook = "";
+            inputFacebook = "";
+            removeFacebook =false;
+        }
+
+        if(removeGithub == true){
+            github = "";
+            inputGithub = "";
+            removeGithub = false;
+        }
+
+        if(removeX == true){
+            x= "";
+            inputX="";
+            removeX=false;
+        }
         
         const res = await wretch("../api/v1/profiles/edit")
             .put({
-                id:userId,
+                id: userId,
                 fullname: fullname,
                 skill : skill,
                 education : education,
@@ -51,17 +87,53 @@
                 x : x
             })
             .json((c) => {
-                profileData.fullname = inputName == null ? profileData.fullname : inputName;
-                profileData.skill = inputSkill == null ? profileData.skill : inputSkill;
-                profileData.education = inputEducation == null ? profileData.education : inputEducation;
-                profileData.facebook = inputFacebook == null ? profileData.facebook : inputFacebook;
-                profileData.github = inputGithub == null ? profileData.github : inputGithub;
-                profileData.x = inputX == null ? profileData.x : inputX;
+                profileData.fullname = fullname;
+                profileData.skill = skill;
+                profileData.education = education;
+                profileData.facebook = facebook;
+                profileData.github = github;
+                profileData.x = x;
                 // console.log(name + " from front");
             });
 
         DialogOpen = false;
+        inputName = "";
+        inputSkill = "";
+        inputEducation = "";
+        inputFacebook = "";
+        inputGithub = "";
+        inputX = "";
     };
+
+    const handleRemove = (e:Event) =>{
+        const target = e.target as HTMLButtonElement | null;
+        if(target){
+            switch(target.name){
+                case "removeSkill":
+                    console.log("skill");
+                    removeSkill = true;
+                    inputSkill = "";
+                case "removeEducation":
+                console.log("edu");
+                    removeEducation = true;
+                    inputEducation = "";
+                case "removeFacebook" :
+                    console.log("F");
+                    removeFacebook = true;
+                    inputFacebook = "";
+                case "removeGithub" :
+                    console.log("g");
+                    removeGithub = true;
+                    inputGithub = "";
+                case "removeX":
+                    console.log("x");
+                    removeX = true;
+                    inputX = "";
+                default:
+                    console.log("default");
+            }
+        }
+    }
 
     const handleInput = (e: Event) => {
         const target = e.target as HTMLInputElement | null;
@@ -143,7 +215,7 @@
                     onOpenChange={(open) => (DialogOpen = open)}
                 >
                     <Dialog.Trigger
-                        class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100"
+                        class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100 opacity-70"
                     >
                         edit
                     </Dialog.Trigger>
@@ -153,7 +225,7 @@
                             <div>
                                 <div class="flex flex-col py-2 gap-2">
                                     <div class="">Name</div>
-                                    <div class="w-full gap-1">
+                                    <div class="flex flex-row w-full gap-1">
                                         <Input name="name"
                                             class="w-full h-[32px]"
                                             placeholder="Enter your name"
@@ -162,49 +234,54 @@
                                             ></Input>
                                     </div>
                                     <div class="">Skill</div>
-                                    <div class="w-full">
+                                    <div class="flex flex-row w-full gap-1">
                                         <Input name="skill"
-                                            class="w-full h-[32px]"
+                                            class="w-[92%] h-[32px]"
                                             placeholder="Enter your skill"
                                             value={inputSkill}
                                             on:input={handleInput}
                                         ></Input>
+                                        <Button name="removeSkill" class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
                                     <div class="">Education</div>
-                                    <div class="w-full">
+                                    <div class="flex flex-row w-full gap-1">
                                         <Input name="education"
-                                            class="w-full h-[32px]"
+                                            class="w-[92%] h-[32px]"
                                             placeholder="Enter your education"
                                             value={inputEducation}
                                             on:input={handleInput}
                                         ></Input>
+                                        <Button name="removeEducation" class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
                                     <div class="">Facebook</div>
-                                    <div class="w-full">
+                                    <div class="flex flex-row w-full gap-1">
                                         <Input name="facebook"
-                                            class="w-full h-[32px]"
-                                            placeholder="Enter your facebook"
+                                            class="w-[92%] h-[32px]"
+                                            placeholder="Enter your facebook profile link"
                                             value={inputFacebook}
                                             on:input={handleInput}
                                         ></Input>
+                                        <Button name="removeFacebook" class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
                                     <div class="">Github</div>
-                                    <div class="w-full">
+                                    <div class="flex flex-row w-full gap-1">
                                         <Input name="github"
-                                            class="w-full h-[32px]"
-                                            placeholder="Enter your github"
+                                            class="w-[92%] h-[32px]"
+                                            placeholder="Enter your github link"
                                             value={inputGithub}
                                             on:input={handleInput}
-                                        ></Input>
+                                            ></Input>
+                                            <Button name="removeGithub"class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
                                     <div class="">X</div>
-                                    <div class="w-full">
+                                    <div class="flex flex-row w-full gap-1">
                                         <Input name="x"
-                                            class="w-full h-[32px]"
-                                            placeholder="Enter your X"
+                                            class="w-[92%] h-[32px]"
+                                            placeholder="Enter your X profile link"
                                             value={inputX}
                                             on:input={handleInput}
                                         ></Input>
+                                        <Button name="removeX"class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
                                     <div class="flex justify-center">
                                         <Button
@@ -259,35 +336,41 @@
             </div>
         {/if}
         <!--Other..-->
-        <div class="flex flex-col justify-start gap-2">
-            <div class="text-[black] text-[20px]">Skill</div>
-            {#if profileData}
-            <div class="text-[black] text-[18px]">{profileData.skill}</div>
+        <div class="flex flex-col justify-start gap-[0.6rem]">
+            <!-- <div class="flex flex-row"> -->
+                <div class="text-[white] text-[20px] bg-[#40A2E3] rounded-2xl justify-start p-[0.3rem] shadow-md">Skill</div>
+            <!-- </div> -->
+            {#if profileData?.skill && profileData.skill !== ""}
+                <div class="text-[black] text-[18px] p-[0.3rem] bg-slate-100 rounded-2xl">{profileData.skill}</div>
+            {:else}
+                <div class="min-h-[34px] leading-[1.5] text-[18px] p-[0.3rem] bg-slate-100 rounded-2xl text-opacity-100"></div>
             {/if}
-            <div class="text-[black] text-[20px]">Education</div>
-            {#if profileData}
-            <div class="text-[black] text-[18px]">{profileData.education}</div>
+                <div class="text-[white] text-[20px] bg-[#40A2E3] rounded-2xl justify-start p-[0.3rem] shadow-md">Education</div>
+            {#if profileData?.education && profileData.education !== ""}
+                <div class="text-[black] text-[18px] p-[0.3rem] bg-slate-100  rounded-2xl">{profileData.education}</div>
+            {:else}
+                <div class="min-h-[34px] leading-[1.5] text-[18px] p-[0.3rem] bg-slate-100 rounded-2xl"></div>
             {/if}
         </div>
         <div class="flex flex-col justify-start gap-2">
             <!--Facebook-->
             <div class = "flex flex-row">
+                {#if profileData?.facebook && profileData.facebook !==""}
                 <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
-                {#if profileData}
                 <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.facebook}</div>
                 {/if}
             </div>
             <!--Github-->
             <div class = "flex flex-row">
+                {#if profileData?.github && profileData.github !== ""}
                 <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
-                {#if profileData}
                 <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.github}</div>
                 {/if}
             </div>
             <!--X-->
             <div class = "flex flex-row">
+                {#if profileData?.x && profileData.x !== ""}
                 <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
-                {#if profileData}
                 <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.x}</div>
                 {/if}
             </div>

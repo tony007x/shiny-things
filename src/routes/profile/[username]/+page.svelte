@@ -5,12 +5,13 @@
     import { Input } from "$lib/components/ui/input/index.js";
 
     //@ts-ignore
-    import { Send, Book } from "lucide-svelte";
+    import { Send, Book, PenLine } from "lucide-svelte";
 
     import wretch from "wretch";
     import { onMount } from "svelte";
     import { page } from "$app/stores";
     import { json } from "@sveltejs/kit";
+  import { Description } from "formsnap";
 
     let DialogOpen: boolean;
     let inputName: string | null = null;
@@ -222,12 +223,23 @@
         <div class="flex flex-col justify-center gap-2">
             <!--pic-->
             <div class="flex justify-center">
-                <Avatar.Root class="w-[250px] h-[250px]">
-                    <Avatar.Image
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
+                <Avatar.Root class="w-[250px] h-[250px] relative group overflow-hidden">
+                    <Avatar.Image class="w-full h-full object-cover"
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
                     />
-                    <Avatar.Fallback>CN</Avatar.Fallback>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[black]">
+                        <PenLine Size={60} color='#000000' strokeWidth={2.75} style="stroke: black;"/>
+                    </div>
+                    <Dialog.Root>
+                        <Dialog.Trigger class="z-10 absolute inset-0 bg-white opacity-0 group-hover:opacity-60 transition-opacity duration-300 cursor-pointer"></Dialog.Trigger>
+                        <Dialog.Content>
+                            <Dialog.Header>Edit your profile image</Dialog.Header>
+                            <Dialog.Description>eiei</Dialog.Description>
+                        </Dialog.Content>
+                    </Dialog.Root>
+                    <!-- Pen Component -->
+                    <Avatar.Fallback class="absolute inset-0 flex items-center justify-center text-4xl font-bold">CN</Avatar.Fallback>
                 </Avatar.Root>
             </div>
             <!--name-->

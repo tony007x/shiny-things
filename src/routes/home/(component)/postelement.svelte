@@ -9,6 +9,49 @@
     import { Settings2, ThumbsUp, MessageCircle } from "lucide-svelte";
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
+    import { Textarea } from "$lib/components/ui/textarea/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import { Label } from "$lib/components/ui/label/index.js";
+    import { toast } from "svelte-sonner";
+
+
+    //drawer
+    let DrawerOpen: boolean;
+    //getUserdata
+    interface TypeData {
+        id: number;
+        username: string;
+        fullname: string;
+    }
+    let profileData: TypeData;
+    const infoUser = sessionStorage.getItem("userData");
+    if (infoUser) {
+        profileData = JSON.parse(infoUser);
+    }
+
+    //For Offer/Apply
+    let sender: string;
+    let content: string;
+
+    const applyoffer = async (post_id:number, post_type: string) => {
+        console.log("sender id: ", profileData.id)
+        console.log("post_id: ", post_id)
+        console.log("post_type: ", post_type)
+        console.log("content: ", content);
+
+        const response: {message: string} = await wretch('api/v1/manage/offerapply')
+        .post({
+            sender_id: profileData.id,
+            post_id: post_id,
+            content: content,
+            post_type: post_type
+        }).json()
+
+        if(response){
+            toast.success(response.message)
+            DrawerOpen = false;
+        }
+    };
 
     interface Post {
         id: number;
@@ -33,7 +76,6 @@
                 .json<Post[]>();
 
             postsStorage = response;
-            console.log(postsStorage[0]);
         } catch (error) {
             console.error("Error loading posts:", error);
         }
@@ -74,7 +116,7 @@
                 </div>
                 <div class="flex flex-col items-end justify-between">
                     <Settings2 color="white" />
-                    <Drawer.Root>
+                    <Drawer.Root open={DrawerOpen}>
                         {#if data.post_type_name !== "general"}
                             <Drawer.Trigger
                                 class="px-4 h-4 bg-white text-black rounded-full text-[10px] font-bold hover:bg-slate-300"
@@ -86,30 +128,52 @@
                                 {/if}
                             </Drawer.Trigger>
                         {/if}
-                        <div class="flex border border-[red]">
-                            <Drawer.Content
-                                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                        <Drawer.Content
+                            class="flex items-center justify-center bg-transparent border border-transparent duration-500"
+                        >
+                            <div
+                                class="w-[90%] max-w-[500px] h-fit bg-white p-4 rounded-lg shadow-lg overflow-auto"
                             >
-                                <div
-                                    class="w-[90%] max-w-[500px] h-[100vh] bg-white p-4 rounded-lg shadow-lg overflow-auto"
-                                >
-                                    <Drawer.Header>
-                                        <Drawer.Title>
-                                            {data.title}
-                                        </Drawer.Title>
-                                        <Drawer.Description>
-                                            {data.content}
-                                        </Drawer.Description>
-                                    </Drawer.Header>
-                                    <Drawer.Footer
-                                        class="flex justify-end space-x-4"
+                                <Drawer.Header>
+                                    <Drawer.Title
+                                        class="flex w-full justify-center"
                                     >
-                                        <Button>Submit</Button>
-                                        <Drawer.Close>Cancel</Drawer.Close>
-                                    </Drawer.Footer>
-                                </div>
-                            </Drawer.Content>
-                        </div>
+                                        {data.title}
+                                    </Drawer.Title>
+                                    <Drawer.Description
+                                        class="flex w-full justify-center"
+                                    >
+                                        {data.content}
+                                    </Drawer.Description>
+                                    <div class=" flex flex-col w-full h-full">
+                                        <Textarea
+                                            placeholder="Type your message here."
+                                            class="min-h-[150px] max-h-[300px] h-auto w-full border border-gray-300 rounded-md p-3 mt-3 mb-3 resize-none"
+                                            bind:value={content}
+                                        />
+                                        <div class="flex flex-col gap-2">
+                                            <Label>Upload for file</Label>
+                                            <Input
+                                                type="file"
+                                                class="flex items-center file:text-black file:pt-[3px] hover:bg-gray-200"
+                                            />
+                                        </div>
+                                    </div>
+                                </Drawer.Header>
+                                <Drawer.Footer
+                                    class="flex justify-end space-x-4"
+                                >
+                                    <Button on:click={()=> applyoffer(data.id, data.post_type_name)}>
+                                        {#if data.post_type_name == "seeker"}
+                                            OFFER
+                                        {:else}
+                                            APPLY
+                                        {/if}
+                                    </Button>
+                                    <Drawer.Close>Cancel</Drawer.Close>
+                                </Drawer.Footer>
+                            </div>
+                        </Drawer.Content>
                     </Drawer.Root>
                 </div>
             </div>

@@ -59,7 +59,7 @@
                 profileData.x = inputX == null ? profileData.x : inputX;
                 // console.log(name + " from front");
             });
-
+            console.log(res)
         DialogOpen = false;
     };
 

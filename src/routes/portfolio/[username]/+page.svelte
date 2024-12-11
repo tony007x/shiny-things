@@ -1,30 +1,22 @@
 <script lang="ts">
     import { toast } from "svelte-sonner";
-    import PortfolioBoxPerform from "./(component)/PortfolioBoxPerform.svelte";
+    import PortfolioBoxPerform from "../(component)/PortfolioBoxPerform.svelte";
     import wretch from "wretch";
+    import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
 
     // รับค่าจาก API และแสดงข้อความใน UI
-    let text: string = "";
-    let message: string = "";
+    let username: string = "";
+    //Validate Owner Profile
+    let isOwn: boolean = true;
 
-    const send = async () => {
-        try {
-            const res = await wretch("api/v1/users/test")
-                .post({
-                    text: text,
-                })
-                .json((c) => {
-                    console.log(c.newtext);
-                    message = c.newtext;
-                });
+    onMount(async () => {
+        const token = localStorage.getItem("token");
 
-            // แสดงข้อความเมื่อสำเร็จ
-            toast.success("Message sent successfully!");
-        } catch (error) {
-            console.error(error);
-            toast.error("Failed to send message.");
+        if (!token) {
+            goto("/authorization");
         }
-    };
+    });
 
     interface PortDetail {
         context: string;
@@ -52,21 +44,4 @@
     {#each portDatailArr as detailEach}
         <PortfolioBoxPerform detail={detailEach} />
     {/each}
-
-    <!-- ช่องข้อความสำหรับส่งข้อมูล -->
-    <div class="mt-4">
-        <h1 class="text-lg font-bold">Hello {message}</h1>
-        <input
-            type="text"
-            bind:value={text}
-            placeholder="Enter your text"
-            class="w-full border p-2 rounded mt-2"
-        />
-        <button
-            on:click={send}
-            class="mt-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-        >
-            Send
-        </button>
-    </div>
 </div>

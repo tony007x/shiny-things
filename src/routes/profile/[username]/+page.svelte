@@ -11,7 +11,7 @@
     import { onMount } from "svelte";
     import { page } from "$app/stores";
     import { json } from "@sveltejs/kit";
-  import { Description } from "formsnap";
+    import { Description } from "formsnap";
 
     let DialogOpen: boolean;
     let inputName: string | null = null;
@@ -209,8 +209,8 @@
                                     <div class="flex justify-center">
                                         <Button
                                             class="text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"
-                                            on:click={edit}>Submit</Button
-                                        >
+                                            on:click={edit}>Submit
+                                            </Button>
                                     </div>
                                 </div>
                             </div>

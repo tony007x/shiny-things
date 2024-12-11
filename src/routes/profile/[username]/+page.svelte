@@ -3,12 +3,13 @@
     import { Button } from "$lib/components/ui/button/index.js";
     import * as Dialog from "$lib/components/ui/dialog/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
-
+    import PostProfile from "../(components)/postProfile.svelte";
     //@ts-ignore
     import { Send, Book, PenLine, X } from "lucide-svelte";
 
     import wretch from "wretch";
     import { onMount } from "svelte";
+    import { invalidateAll } from '$app/navigation';
     import { page } from "$app/stores";
     import { json } from "@sveltejs/kit";
     import { Description } from "formsnap";
@@ -95,7 +96,7 @@
                 profileData.x = x;
                 // console.log(name + " from front");
             });
-
+            console.log(res)
         DialogOpen = false;
         inputName = "";
         inputSkill = "";
@@ -201,6 +202,7 @@
             }
         }
     });
+
 </script>
 
 <div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[BBE2EC]">
@@ -387,7 +389,7 @@
 
     <!-- middle box -->
     <div class="flex flex-col w-full p-5 gap-4 overflow-scroll">
-        <!-- <Postelement /> -->
+        <PostProfile />
     </div>
 
     <!-- right box -->

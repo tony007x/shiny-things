@@ -52,7 +52,26 @@
     const handleInput = (e: Event) => {
         const target = e.target as HTMLInputElement | null;
         if (target) {
-            inputName = target.value;
+            switch (target.name) {
+            case "name":
+                inputName = target.value;
+                break;
+            case "skill":
+                inputSkill = target.value;
+                break;
+            case "education":
+                inputEducation = target.value;
+                break;
+            case "facebook":
+                inputFacebook = target.value;
+                break;
+            case "github":
+                inputGithub = target.value;
+                break;
+            case "x":
+                inputX = target.value;
+                break;
+        }
         }
     };
 
@@ -76,6 +95,7 @@
         let ownUser = sessionStorage.getItem("userData");
         username = pathParts[pathParts.length - 1];
         console.log(isOwn)
+        
         if (ownUser) {
             ownUser = JSON.parse(ownUser).username
             isOwn = (ownUser === username)? false: true;
@@ -118,7 +138,7 @@
                             <div class="flex flex-col py-2 gap-2">
                                 <div class="">Name</div>
                                 <div class="w-full gap-1">
-                                    <Input
+                                    <Input name="name"
                                         class="w-full h-[32px]"
                                         placeholder="Enter your name"
                                         value={inputName}
@@ -127,7 +147,7 @@
                                 </div>
                                 <div class="">Skill</div>
                                 <div class="w-full">
-                                    <Input
+                                    <Input name="skill"
                                         class="w-full h-[32px]"
                                         placeholder="Enter your skill"
                                         value={inputSkill}
@@ -136,7 +156,7 @@
                                 </div>
                                 <div class="">Education</div>
                                 <div class="w-full">
-                                    <Input
+                                    <Input name="education"
                                         class="w-full h-[32px]"
                                         placeholder="Enter your education"
                                         value={inputEducation}
@@ -145,7 +165,7 @@
                                 </div>
                                 <div class="">Facebook</div>
                                 <div class="w-full">
-                                    <Input
+                                    <Input name="facebook"
                                         class="w-full h-[32px]"
                                         placeholder="Enter your facebook"
                                         value={inputFacebook}
@@ -154,7 +174,7 @@
                                 </div>
                                 <div class="">Github</div>
                                 <div class="w-full">
-                                    <Input
+                                    <Input name="github"
                                         class="w-full h-[32px]"
                                         placeholder="Enter your github"
                                         value={inputGithub}
@@ -163,7 +183,7 @@
                                 </div>
                                 <div class="">X</div>
                                 <div class="w-full">
-                                    <Input
+                                    <Input name="x"
                                         class="w-full h-[32px]"
                                         placeholder="Enter your X"
                                         value={inputX}
@@ -213,25 +233,35 @@
         <!--Other..-->
         <div class="flex flex-col justify-start gap-2">
             <div class="text-[black] text-[20px]">Skill</div>
+            {#if profileData}
             <div class="text-[black] text-[18px]">{profileData.skill}</div>
+            {/if}
             <div class="text-[black] text-[20px]">Education</div>
+            {#if profileData}
             <div class="text-[black] text-[18px]">{profileData.education}</div>
+            {/if}
         </div>
         <div class="flex flex-col justify-start gap-2">
             <!--Facebook-->
             <div class = "flex flex-row">
                 <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
+                {#if profileData}
                 <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.facebook}</div>
+                {/if}
             </div>
             <!--Github-->
             <div class = "flex flex-row">
                 <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
+                {#if profileData}
                 <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.github}</div>
+                {/if}
             </div>
             <!--X-->
             <div class = "flex flex-row">
                 <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
+                {#if profileData}
                 <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.x}</div>
+                {/if}
             </div>
         </div>
         <div class="flex justify-center">

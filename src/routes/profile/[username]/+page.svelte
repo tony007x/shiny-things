@@ -26,8 +26,12 @@
     let github : string = "";
     let x : string = "";
 
+    const test = async() =>{
+        const res = await wretch("api/v1/users/see-user").get().json()
+    }
+
     const edit = async () => {
-        const res = await wretch("api/v1/profile/profile")
+        const res = await wretch("api/v1/users/edit")
             .put({
                 name: name,
                 skill : skill,
@@ -37,12 +41,12 @@
                 x : x
             })
             .json((c) => {
-                name = inputName == null ? name : inputName;
-                skill = inputSkill == null ? skill : inputSkill;
-                education = inputEducation == null ? education : inputEducation;
-                facebook = inputFacebook == null ? facebook : inputFacebook;
-                github = inputGithub == null ? github : inputGithub;
-                x = inputX == null ? x : inputX;
+                profileData.fullname = inputName == null ? profileData.fullname : inputName;
+                profileData.skill = inputSkill == null ? profileData.skill : inputSkill;
+                profileData.education = inputEducation == null ? profileData.education : inputEducation;
+                profileData.facebook = inputFacebook == null ? profileData.facebook : inputFacebook;
+                profileData.github = inputGithub == null ? profileData.github : inputGithub;
+                profileData.x = inputX == null ? profileData.x : inputX;
                 // console.log(name + " from front");
             });
 
@@ -116,91 +120,91 @@
 
 <div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[BBE2EC]">
     <!-- left box -->
-    <div
-        class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full gap-5 p-3"
-    >
+    <div class="flex flex-col w-[33.33%] border-r bg-[#BBE2EC] h-full gap-5 p-3">
         <!-- <div class="fixed gap-5 p-3 flex flex-col h-full border-r border-[green]"> -->
         <!--edit profile-->
         <div class="flex ml-auto">
-            <Dialog.Root
-                open={DialogOpen}
-                onOpenChange={(open) => (DialogOpen = open)}
-            >
-                <Dialog.Trigger
-                    class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100"
+            {#if !isOwn}
+                <Dialog.Root
+                    open={DialogOpen}
+                    onOpenChange={(open) => (DialogOpen = open)}
                 >
-                    edit
-                </Dialog.Trigger>
-                <Dialog.Content>
-                    <Dialog.Header>Edit Your Profile</Dialog.Header>
-                    <Dialog.Description class="flex flex-col w-full">
-                        <div>
-                            <div class="flex flex-col py-2 gap-2">
-                                <div class="">Name</div>
-                                <div class="w-full gap-1">
-                                    <Input name="name"
-                                        class="w-full h-[32px]"
-                                        placeholder="Enter your name"
-                                        value={inputName}
-                                        on:input={handleInput}
+                    <Dialog.Trigger
+                        class="border border-[#D9D9D9] items-center px-2 rounded-2xl hover:bg-slate-100"
+                    >
+                        edit
+                    </Dialog.Trigger>
+                    <Dialog.Content>
+                        <Dialog.Header>Edit Your Profile</Dialog.Header>
+                        <Dialog.Description class="flex flex-col w-full">
+                            <div>
+                                <div class="flex flex-col py-2 gap-2">
+                                    <div class="">Name</div>
+                                    <div class="w-full gap-1">
+                                        <Input name="name"
+                                            class="w-full h-[32px]"
+                                            placeholder="Enter your name"
+                                            value={inputName}
+                                            on:input={handleInput}
+                                            ></Input>
+                                    </div>
+                                    <div class="">Skill</div>
+                                    <div class="w-full">
+                                        <Input name="skill"
+                                            class="w-full h-[32px]"
+                                            placeholder="Enter your skill"
+                                            value={inputSkill}
+                                            on:input={handleInput}
                                         ></Input>
-                                </div>
-                                <div class="">Skill</div>
-                                <div class="w-full">
-                                    <Input name="skill"
-                                        class="w-full h-[32px]"
-                                        placeholder="Enter your skill"
-                                        value={inputSkill}
-                                        on:input={handleInput}
-                                    ></Input>
-                                </div>
-                                <div class="">Education</div>
-                                <div class="w-full">
-                                    <Input name="education"
-                                        class="w-full h-[32px]"
-                                        placeholder="Enter your education"
-                                        value={inputEducation}
-                                        on:input={handleInput}
-                                    ></Input>
-                                </div>
-                                <div class="">Facebook</div>
-                                <div class="w-full">
-                                    <Input name="facebook"
-                                        class="w-full h-[32px]"
-                                        placeholder="Enter your facebook"
-                                        value={inputFacebook}
-                                        on:input={handleInput}
-                                    ></Input>
-                                </div>
-                                <div class="">Github</div>
-                                <div class="w-full">
-                                    <Input name="github"
-                                        class="w-full h-[32px]"
-                                        placeholder="Enter your github"
-                                        value={inputGithub}
-                                        on:input={handleInput}
-                                    ></Input>
-                                </div>
-                                <div class="">X</div>
-                                <div class="w-full">
-                                    <Input name="x"
-                                        class="w-full h-[32px]"
-                                        placeholder="Enter your X"
-                                        value={inputX}
-                                        on:input={handleInput}
-                                    ></Input>
-                                </div>
-                                <div class="flex justify-center">
-                                    <Button
-                                        class="text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"
-                                        on:click={edit}>Submit</Button
-                                    >
+                                    </div>
+                                    <div class="">Education</div>
+                                    <div class="w-full">
+                                        <Input name="education"
+                                            class="w-full h-[32px]"
+                                            placeholder="Enter your education"
+                                            value={inputEducation}
+                                            on:input={handleInput}
+                                        ></Input>
+                                    </div>
+                                    <div class="">Facebook</div>
+                                    <div class="w-full">
+                                        <Input name="facebook"
+                                            class="w-full h-[32px]"
+                                            placeholder="Enter your facebook"
+                                            value={inputFacebook}
+                                            on:input={handleInput}
+                                        ></Input>
+                                    </div>
+                                    <div class="">Github</div>
+                                    <div class="w-full">
+                                        <Input name="github"
+                                            class="w-full h-[32px]"
+                                            placeholder="Enter your github"
+                                            value={inputGithub}
+                                            on:input={handleInput}
+                                        ></Input>
+                                    </div>
+                                    <div class="">X</div>
+                                    <div class="w-full">
+                                        <Input name="x"
+                                            class="w-full h-[32px]"
+                                            placeholder="Enter your X"
+                                            value={inputX}
+                                            on:input={handleInput}
+                                        ></Input>
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <Button
+                                            class="text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"
+                                            on:click={test}>Submit</Button
+                                        >
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Dialog.Description>
-                </Dialog.Content>
-            </Dialog.Root>
+                        </Dialog.Description>
+                    </Dialog.Content>
+                </Dialog.Root>
+            {/if}
         </div>
         <!--profile-->
         <div class="flex flex-col justify-center gap-2">

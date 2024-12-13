@@ -5,6 +5,7 @@
     import { Mail, Lock, Github, Facebook, User } from "lucide-svelte";
     import { toast } from "svelte-sonner";
     import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
     let isRegister: boolean = false;
 
     let username: string;
@@ -64,6 +65,16 @@
             goto("/authorization");
         }
     };
+
+    //if already login can't be login again unless u log out
+    onMount(async () => {
+        const token = localStorage.getItem("token");
+
+        if(token){
+            goto("/home")
+        }
+    });
+
 </script>
 
 <div

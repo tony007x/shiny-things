@@ -94,16 +94,16 @@
                 profileData.facebook = facebook;
                 profileData.github = github;
                 profileData.x = x;
-                // console.log(name + " from front");
             });
+            
             console.log(res)
-        DialogOpen = false;
-        inputName = "";
-        inputSkill = "";
-        inputEducation = "";
-        inputFacebook = "";
-        inputGithub = "";
-        inputX = "";
+            DialogOpen = false;
+            inputName = "";
+            inputSkill = "";
+            inputEducation = "";
+            inputFacebook = "";
+            inputGithub = "";
+            inputX = "";
     };
 
     const handleRemove = (e:Event) =>{
@@ -111,27 +111,27 @@
         if(target){
             switch(target.name){
                 case "removeSkill":
-                    console.log("skill");
                     removeSkill = true;
                     inputSkill = "";
+                    break;
                 case "removeEducation":
-                console.log("edu");
                     removeEducation = true;
                     inputEducation = "";
+                    break;
                 case "removeFacebook" :
-                    console.log("F");
                     removeFacebook = true;
                     inputFacebook = "";
+                    break;
                 case "removeGithub" :
-                    console.log("g");
                     removeGithub = true;
                     inputGithub = "";
+                    break;
                 case "removeX":
-                    console.log("x");
                     removeX = true;
                     inputX = "";
+                    break;
                 default:
-                    console.log("default");
+                    break;
             }
         }
     }
@@ -358,22 +358,22 @@
             <!--Facebook-->
             <div class = "flex flex-row">
                 {#if profileData?.facebook && profileData.facebook !==""}
-                <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
-                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.facebook}</div>
+                    <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
+                    <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.facebook}</div>
                 {/if}
             </div>
             <!--Github-->
             <div class = "flex flex-row">
                 {#if profileData?.github && profileData.github !== ""}
-                <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
-                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.github}</div>
+                    <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
+                    <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.github}</div>
                 {/if}
             </div>
             <!--X-->
             <div class = "flex flex-row">
                 {#if profileData?.x && profileData.x !== ""}
-                <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
-                <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.x}</div>
+                    <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
+                    <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.x}</div>
                 {/if}
             </div>
         </div>

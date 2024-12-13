@@ -95,7 +95,7 @@
                 profileData.github = github;
                 profileData.x = x;
             });
-            
+
             console.log(res)
             DialogOpen = false;
             inputName = "";
@@ -202,6 +202,24 @@
             }
         }
     });
+
+    const extractFacebookUsername = (url: string): string | null => {
+        const pattern = /(?:https?:\/\/)?(?:www\.|m\.)?facebook\.com\/(?:profile\.php\?id=)?([a-zA-Z0-9._-]+)(?:\/|\?|$)/;
+        const match = url.match(pattern);
+        return match ? match[1] : null;
+    };
+
+    const extractGithubUsername = (url: string): string | null => {
+        const pattern = /(?:https?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9-_]+)(?:\/|\?|$)/;
+        const match = url.match(pattern);
+        return match ? match[1] : null;
+    };
+
+    const extractXUsername = (url: string): string | null => {
+        const pattern = /(?:https?:\/\/)?(?:www\.)?(?:twitter\.com|x\.com)\/@?([a-zA-Z0-9_]+)(?:\/|\?|$)/;
+        const match = url.match(pattern);
+        return match ? match[1] : null;
+    };
 
 </script>
 
@@ -357,23 +375,23 @@
         <div class="flex flex-col justify-start gap-2">
             <!--Facebook-->
             <div class = "flex flex-row">
-                {#if profileData?.facebook && profileData.facebook !==""}
+                {#if profileData?.facebook && profileData.facebook !=="" && extractFacebookUsername(profileData.facebook)}
                     <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
-                    <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.facebook}</div>
+                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.facebook}>{extractFacebookUsername(profileData.facebook)}</a></div>
                 {/if}
             </div>
             <!--Github-->
             <div class = "flex flex-row">
-                {#if profileData?.github && profileData.github !== ""}
+                {#if profileData?.github && profileData.github !== "" && extractGithubUsername(profileData.github)}
                     <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
-                    <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.github}</div>
+                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.github}>{extractGithubUsername(profileData.github)}</a></div>
                 {/if}
             </div>
             <!--X-->
             <div class = "flex flex-row">
-                {#if profileData?.x && profileData.x !== ""}
+                {#if profileData?.x && profileData.x !== "" && extractXUsername(profileData.x)}
                     <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
-                    <div class="text-[black] text-[18px] py-1 ml-auto">{profileData.x}</div>
+                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.x}>{extractXUsername(profileData.x)}</a></div>
                 {/if}
             </div>
         </div>

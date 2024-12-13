@@ -221,6 +221,19 @@
         return match ? match[1] : null;
     };
 
+    // let file;
+    // let previewUrl = '';
+
+    // const handleFileChange = (event:Event) =>{
+    //     const input = event.target as HTMLInputElement;
+    //     const selectedFile = input.files?.[0];
+
+    //     if(selectedFile){
+    //         file = selectedFile;
+    //         previewUrl = URL.createObjectURL(file);
+    //     }
+    // }
+
 </script>
 
 <div class="flex w-full h-[calc(100vh-64px)] overflow-y-auto bg-[BBE2EC]">
@@ -242,6 +255,7 @@
                     <Dialog.Content>
                         <Dialog.Header>Edit Your Profile</Dialog.Header>
                         <Dialog.Description class="flex flex-col w-full">
+                            <div class="text-[12px]">You can remove some information from your profile via X on the right side</div>
                             <div>
                                 <div class="flex flex-col py-2 gap-2">
                                     <div class="">Name</div>
@@ -283,6 +297,7 @@
                                         ></Input>
                                         <Button name="removeFacebook" class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
+                                    <div class="text-[12px]">Example: www.facebook.com/username</div>
                                     <div class="">Github</div>
                                     <div class="flex flex-row w-full gap-1">
                                         <Input name="github"
@@ -293,6 +308,7 @@
                                             ></Input>
                                             <Button name="removeGithub"class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
+                                    <div class="text-[12px]">Example: www.github.com/username</div>
                                     <div class="">X</div>
                                     <div class="flex flex-row w-full gap-1">
                                         <Input name="x"
@@ -303,6 +319,7 @@
                                         ></Input>
                                         <Button name="removeX"class="w-[8%] h-[32px] rounded-2xl shadow-md text-[16px] text-[656565] hover:bg-slate-300 bg-slate-100" on:click={handleRemove}>X</Button>
                                     </div>
+                                    <div class="text-[12px]">Example: www.x.com/username or www.twitter.com/username</div>
                                     <div class="flex justify-center">
                                         <Button
                                             class="text-[16px] text-[white] w-fit h-fit gap-2 bg-[#40A2E3] hover:bg-[#3280b4] rounded-2xl shadow-md"
@@ -325,6 +342,7 @@
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
                     />
+                    {#if !isOwn}
                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[black]">
                         <PenLine Size={60} color='#000000' strokeWidth={2.75} style="stroke: black;"/>
                     </div>
@@ -332,9 +350,15 @@
                         <Dialog.Trigger class="z-10 absolute inset-0 bg-white opacity-0 group-hover:opacity-60 transition-opacity duration-300 cursor-pointer"></Dialog.Trigger>
                         <Dialog.Content>
                             <Dialog.Header>Edit your profile image</Dialog.Header>
-                            <Dialog.Description>eiei</Dialog.Description>
+                            <Dialog.Description>
+                                <!-- <input type="file" accept="image/*" on:change={handleFileChange}/> -->
+                                <!-- {#if previewUrl}
+                                    <img src={previewUrl} alt="Image preview"/>
+                                {/if} -->
+                            </Dialog.Description>
                         </Dialog.Content>
                     </Dialog.Root>
+                    {/if}
                     <!-- Pen Component -->
                     <Avatar.Fallback class="absolute inset-0 flex items-center justify-center text-4xl font-bold">CN</Avatar.Fallback>
                 </Avatar.Root>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Description } from "formsnap";
     import wretch from "wretch";
     import * as Avatar from "$lib/components/ui/avatar/index.js";
     import { Badge } from "$lib/components/ui/badge/index.js";
@@ -12,7 +11,7 @@
     import { Select } from "bits-ui";
 
     //@ts-ignore
-    import { Settings, ThumbsUp, MessageCircle, ChevronDown } from "lucide-svelte";
+    import {  Settings, ThumbsUp,  MessageCircle,  ChevronDown, } from "lucide-svelte";
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
     import { toast } from "svelte-sonner";
@@ -56,23 +55,43 @@
     let newTitle: string;
     let newContent: string;
     let visibility: any = true;
+    let sheetOpen: boolean;
 
     const postvisible = [
         { value: true, label: "Public" },
         { value: false, label: "Private" },
     ];
 
-    const editPost = async (post_id: number,post_title: string,post_content: string,visibility_post: boolean) => {
+    const editPost = async (
+        post_id: number,
+        post_title: string,
+        post_content: string,
+        visibility_post: boolean,
+    ) => {
         console.log(post_id);
         console.log(newTitle ?? post_title);
         console.log(newContent ?? post_content);
         console.log(visibility);
     };
 
-    const delelePost = async(post_id: number)=>{
+    const delelePost = async (post_id: number) => {
         console.log(post_id);
-    }
+        try {
+            const response: {message: string} = await wretch(
+                `api/v1/posts/delete-post/${post_id}`,
+            )
+                .delete()
+                .json();
 
+                if(response){
+                    toast.success(response.message)
+                    sheetOpen = false;
+                    window.location.reload()
+                }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
     interface Post {
         id: number;
         user_id: number;
@@ -94,12 +113,12 @@
         if (infoUser) {
             profileData = await JSON.parse(infoUser);
         }
-        try { 
+        try {
             const response: Post[] = await wretch("api/v1/posts/get-post")
                 .get()
                 .json<Post[]>();
 
-                postsStorage = response.filter(post => post.is_visible);
+            postsStorage = response.filter((post) => post.is_visible);
         } catch (error) {
             console.error("Error loading posts:", error);
         }
@@ -140,7 +159,7 @@
                 </div>
                 <div class="flex flex-col items-end justify-between">
                     {#if data.user_id == profileData.id}
-                        <Sheet.Root>
+                        <Sheet.Root open={sheetOpen}>
                             <Sheet.Trigger asChild let:builder>
                                 <Button builders={[builder]} variant="link"
                                     ><Settings
@@ -168,7 +187,9 @@
                                             class="flex w-[180px] text-left bg-gray-100 rounded-lg px-3 justify-between items-center"
                                         >
                                             <Select.Value
-                                                placeholder={data.is_visible? "Public" : "Private"}
+                                                placeholder={data.is_visible
+                                                    ? "Public"
+                                                    : "Private"}
                                             />
                                             <ChevronDown />
                                         </Select.Trigger>
@@ -190,9 +211,7 @@
                                 </div>
                                 <div class="flex flex-col gap-2 mt-4">
                                     <div class="flex flex-col gap-2">
-                                        <Label class="font-bold"
-                                            >Title</Label
-                                        >
+                                        <Label class="font-bold">Title</Label>
                                         <Input
                                             bind:value={newTitle}
                                             placeholder={data.title}
@@ -215,7 +234,12 @@
                                 <Sheet.Footer>
                                     <Sheet.Close asChild let:builder>
                                         <div>
-                                            <Button type="submit" class="bg-red-500 hover:bg-red-300" on:click={()=>delelePost(data.id)}>
+                                            <Button
+                                                type="submit"
+                                                class="bg-red-500 hover:bg-red-300"
+                                                on:click={() =>
+                                                    delelePost(data.id)}
+                                            >
                                                 Delete
                                             </Button>
                                             <Button
@@ -227,8 +251,9 @@
                                                         data.id,
                                                         data.title,
                                                         data.content,
-                                                        visibility
-                                                    )}>Save changes</Button>
+                                                        visibility,
+                                                    )}>Save changes</Button
+                                            >
                                         </div>
                                     </Sheet.Close>
                                 </Sheet.Footer>

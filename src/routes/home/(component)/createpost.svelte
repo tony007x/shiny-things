@@ -14,6 +14,7 @@
   //@ts-ignore
   import { Image, ChevronDown } from "lucide-svelte";
     import { boolean } from "zod";
+    import { toast } from 'svelte-sonner';
 
   const postvisible = [
     { value: true, label: "Public" },
@@ -64,7 +65,7 @@
     console.log("tags: ", tags);
     console.log("type:", type);
     
-    const respone = await wretch('api/v1/posts/create')
+    const respone: {message: string} = await wretch('api/v1/posts/create')
     .post({
       user_id: profileData?.id,
       title: title,
@@ -77,6 +78,7 @@
     .json()
 
     if(respone){
+      toast.success(respone.message)
       DialogOpen = false;
       window.location.reload();
     }

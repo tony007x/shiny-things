@@ -377,21 +377,21 @@
             <div class = "flex flex-row">
                 {#if profileData?.facebook && profileData.facebook !=="" && extractFacebookUsername(profileData.facebook)}
                     <img src="/facebook.png" alt="facebook" class="h-[40px] w-[40px]" />
-                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.facebook}>{extractFacebookUsername(profileData.facebook)}</a></div>
+                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.facebook} target="_blank">{extractFacebookUsername(profileData.facebook)}</a></div>
                 {/if}
             </div>
             <!--Github-->
             <div class = "flex flex-row">
                 {#if profileData?.github && profileData.github !== "" && extractGithubUsername(profileData.github)}
                     <img src="/github.png" alt="github" class="h-[40px] w-[40px]" />
-                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.github}>{extractGithubUsername(profileData.github)}</a></div>
+                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.github} target="_blank">{extractGithubUsername(profileData.github)}</a></div>
                 {/if}
             </div>
             <!--X-->
             <div class = "flex flex-row">
                 {#if profileData?.x && profileData.x !== "" && extractXUsername(profileData.x)}
                     <img src="/x.png" alt="x" class="h-[40px] w-[40px]" />
-                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.x}>{extractXUsername(profileData.x)}</a></div>
+                    <div class="text-[black] text-[18px] py-1 ml-auto"><a href={profileData.x} target="_blank">{extractXUsername(profileData.x)}</a></div>
                 {/if}
             </div>
         </div>

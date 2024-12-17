@@ -137,9 +137,6 @@
         <!-- Job Seeker Content -->
         {#if isOffer}
             <Applicants />
-            <Applicants />
-            <Applicants />
-            <Applicants />
         {/if}
         {#if isJobPending}
             <Padding />
@@ -150,9 +147,6 @@
 
         <!-- Recruiter Content -->
         {#if isApplicant}
-            <Applicants />
-            <Applicants />
-            <Applicants />
             <Applicants />
         {/if}
         {#if isRecPending}

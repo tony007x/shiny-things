@@ -41,7 +41,7 @@
 
     onMount(async () => {
         try {
-            const response: TypeData = await wretch("api/v1/work/get-offerApply")
+            const response: TypeData = await wretch("api/v1/manage/get-offerApply")
                 .get()
                 .json<TypeData>();
             if (response){

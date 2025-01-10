@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { json } from '@sveltejs/kit';
-	import  wretch  from 'wretch';
+  import { json } from '@sveltejs/kit';
+  import wretch from 'wretch';
   import Label from "./../../../lib/components/ui/label/label.svelte";
   import * as Avatar from "$lib/components/ui/avatar/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
@@ -11,10 +11,21 @@
   import { Select } from "bits-ui";
   import { onMount } from "svelte";
 
+  let fileName: string = ""; // ตัวแปรเก็บชื่อไฟล์ที่เลือก
+  let fileInput: HTMLInputElement;
+  let DialogOpen: boolean = false;
+
+  const handleFileChange = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    const file = input.files ? input.files[0] : null; // ตรวจสอบว่าเลือกไฟล์หรือไม่
+    if (file) {
+      fileName = file.name; // กำหนดชื่อไฟล์ที่เลือก
+    }
+  };
+
   //@ts-ignore
   import { Image, ChevronDown } from "lucide-svelte";
-    import { boolean } from "zod";
-    import { toast } from 'svelte-sonner';
+  import { toast } from 'svelte-sonner';
 
   const postvisible = [
     { value: true, label: "Public" },
@@ -53,9 +64,8 @@
   let title: string = "";
   let content: string = "";
   let visibility: any = true;
-  let tags:any = postTags[0].value; // Default to first tag
+  let tags: any = postTags[0].value; // Default to first tag
   let type: number | null = null;
-  let DialogOpen: boolean;
 
   const create = async () => {
     console.log("userid:", profileData?.id);
@@ -64,24 +74,61 @@
     console.log("Visibility:", visibility);
     console.log("tags: ", tags);
     console.log("type:", type);
-    
-    const respone: {message: string} = await wretch('api/v1/posts/create')
-    .post({
-      user_id: profileData?.id,
-      title: title,
-      content: content,
-      post_type_id: type,
-      post_tag_id: tags,
-      is_visible: visibility,
-      like_count: 0
-    })
-    .json()
+    console.log({file: fileInput})
 
-    if(respone){
-      toast.success(respone.message)
-      DialogOpen = false;
-      window.location.reload();
+    // แสดงข้อมูลไฟล์ที่เลือก
+    if (fileInput?.files && fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+
+    // สร้าง FormData เพื่อส่งข้อมูล
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await wretch('api/v1/attachments/upload')
+        .post(formData)
+        .json();
+
+      if (response) {
+        toast.success("Uploaded!");
+        console.log({file})
+      }
+    } catch (error) {
+      toast.error('Error uploading file');
+      console.error(error);
     }
+
+    // try {
+    //   const response = await wretch('api/v1/attachments/upload')
+    //     .post(formData)
+    //     .json();
+
+    //   if (response) {
+    //     toast.success(response.message);
+    //     // ปิด Dialog หรือทำอย่างอื่น
+    //   }
+    // } catch (error) {
+    //   toast.error('Error uploading file');
+    //   console.error(error);
+    // }
+  }
+    // const response: { message: string } = await wretch('api/v1/posts/create')
+    //   .post({
+    //     user_id: profileData?.id,
+    //     title: title,
+    //     content: content,
+    //     post_type_id: type,
+    //     post_tag_id: tags,
+    //     is_visible: visibility,
+    //     like_count: 0
+    //   })
+    //   .json();
+
+    // if (response) {
+    //   toast.success(response.message);
+    //   DialogOpen = false;
+    //   window.location.reload();
+    // }
   };
 
   const toggleCheckbox = (option: number) => {
@@ -123,9 +170,9 @@
                 <div class="flex flex-col justify-between w-full">
                   <h1 class="font-bold text-lg">{profileData?.fullname}</h1>
                   <Select.Root
-                  onSelectedChange={(s)=>{
-                    visibility = s?.value;
-                  }}
+                    onSelectedChange={(s) => {
+                      visibility = s?.value;
+                    }}
                   >
                     <Select.Trigger
                       class="flex w-[180px] text-left bg-gray-100 rounded-lg px-3 justify-between items-center"
@@ -161,7 +208,7 @@
               bind:value={content}
             />
             <Select.Root
-              onSelectedChange={(s)=>{
+              onSelectedChange={(s) => {
                 tags = s?.value;
               }}
             >
@@ -175,13 +222,12 @@
                 class="bg-gray-100 border border-gray-300 rounded-lg"
               >
                 <Select.Group>
-                  {#each postTags as tags}
+                  {#each postTags as tag}
                     <Select.Item
                       class="hover:cursor-pointer hover:bg-gray-300 px-4 py-2"
-                      value={tags.value}
-                      label={tags.label}
+                      value={tag.value}
                     >
-                      {tags.label}
+                      {tag.label}
                     </Select.Item>
                   {/each}
                 </Select.Group>
@@ -192,7 +238,19 @@
               <Button
                 class="bg-white text-black rounded-lg gap-2 hover:bg-slate-300 px-4 py-2"
               >
-                <Image size={20} /> Media
+                <!-- ซ่อน input แบบ file -->
+                <input type="file" id="file-input" class="hidden" bind:this={fileInput} on:change={handleFileChange} />
+                  
+                <!-- ใช้ label เชื่อมโยงกับ input -->
+                <label for="file-input" class="flex items-center cursor-pointer">
+                  <Image size={20} />
+                  <span class="ml-2">Media</span>
+                </label>
+                
+                <!-- แสดงชื่อไฟล์ที่เลือก -->
+                {#if fileName}
+                  <span class="ml-4 text-sm text-gray-500">{fileName}</span>
+                {/if}
               </Button>
 
               <div class="flex items-center gap-4">
